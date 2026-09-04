@@ -27,6 +27,10 @@ argvus --btm
 argvus --spf
 argvus --yazy
 argvus --setup
+argvus --about
+argvus --calendar
+argvus --default-apps
+argvus --storage
 ```
 
 The package intentionally does not depend on the `argvus` metapackage to avoid a

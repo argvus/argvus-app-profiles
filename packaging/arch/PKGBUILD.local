@@ -18,7 +18,10 @@ depends=(
   'yazi'
 )
 optdepends=(
-  'argvus-default-apps: graphical default application selector used by argvus --setup integration'
+  'argvus: argvus-about binary used by argvus --about in a full desktop install'
+  'argvus-calendar: calendar app launched by argvus --calendar'
+  'argvus-default-apps: graphical default application selector launched by argvus --default-apps'
+  'argvus-storage: removable storage app launched by argvus --storage'
   'neovim: default terminal editor profile'
   'vivid: LS_COLORS generation in the shared terminal profile'
 )

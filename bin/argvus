@@ -11,9 +11,13 @@ Usage:
   argvus --btm [bottom options]
   argvus --spf [superfile options]
   argvus --yazy [yazi options]
+  argvus --about [argvus-about options]
+  argvus --calendar [argvus-calendar options]
+  argvus --default-apps [argvus-default-apps options]
+  argvus --storage [argvus-storage options]
 
 Aliases:
-  argvus setup | btop | btm | spf | yazi
+  argvus setup | btop | btm | spf | yazi | about | calendar | default-apps | storage
   argvus --yazi
 
 Setup options:
@@ -26,6 +30,11 @@ EOF
 }
 
 die() { printf 'argvus: %s\n' "$*" >&2; exit 1; }
+
+require_command() {
+  _command="$1"
+  command -v "$_command" >/dev/null 2>&1 || die "$_command is not installed"
+}
 
 source_bootstrap() {
   : "${HOME:?HOME is not set}"
@@ -347,6 +356,35 @@ run_yazi() {
   exec yazi "$@"
 }
 
+run_about() {
+  require_command argvus-about
+  exec argvus-about "$@"
+}
+
+run_calendar() {
+  require_command argvus-calendar
+  if [ "$#" -eq 0 ]; then
+    set -- toggle
+  fi
+  exec argvus-calendar "$@"
+}
+
+run_default_apps() {
+  require_command argvus-default-apps
+  if [ "$#" -eq 0 ]; then
+    set -- show
+  fi
+  exec argvus-default-apps "$@"
+}
+
+run_storage() {
+  require_command argvus-storage
+  if [ "$#" -eq 0 ]; then
+    set -- menu
+  fi
+  exec argvus-storage "$@"
+}
+
 case "${1:-}" in
   --setup|setup)
     shift
@@ -367,6 +405,22 @@ case "${1:-}" in
   --yazy|yazy|--yazi|yazi)
     shift
     run_yazi "$@"
+    ;;
+  --about|about)
+    shift
+    run_about "$@"
+    ;;
+  --calendar|calendar)
+    shift
+    run_calendar "$@"
+    ;;
+  --default-apps|default-apps)
+    shift
+    run_default_apps "$@"
+    ;;
+  --storage|storage)
+    shift
+    run_storage "$@"
     ;;
   --help|-h|'')
     usage
