@@ -8,14 +8,18 @@ repository:
 - `bottom`
 - `btop`
 - `foot`
+- `foot-tui`
 - `kitty`
+- `kitty-tui`
 - `snappy-switcher`
 - `superfile`
 - `term`
 - `yazi`
 
 It also installs `/usr/bin/argvus`, the compatibility command used by current
-ARGVUS bindings and aliases for:
+ARGVUS bindings and aliases, and `/usr/bin/argvus-tui-terminal`, the dedicated
+terminal launcher for desktop-opened TUI windows that should use Terminus
+without changing the normal terminal profile.
 
 ```sh
 argvus --btop

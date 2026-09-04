@@ -17,6 +17,8 @@ help:
 install:
 	$(INSTALL) -Dm755 bin/argvus \
 		"$(DESTDIR)$(PREFIX)/bin/argvus"
+	$(INSTALL) -Dm755 bin/argvus-tui-terminal \
+		"$(DESTDIR)$(PREFIX)/bin/argvus-tui-terminal"
 	$(INSTALL) -dm755 "$(DESTDIR)$(PREFIX)/share/argvus"
 	cp -a config/. "$(DESTDIR)$(PREFIX)/share/argvus/"
 	find "$(DESTDIR)$(PREFIX)/share/argvus/scripts" -type f -name '*.sh' -exec chmod 755 {} \; 2>/dev/null || true
@@ -25,7 +27,8 @@ install:
 
 uninstall:
 	$(RM) "$(DESTDIR)$(PREFIX)/bin/argvus"
-	for dir in bottom btop foot kitty snappy-switcher superfile term yazi; do \
+	$(RM) "$(DESTDIR)$(PREFIX)/bin/argvus-tui-terminal"
+	for dir in bottom btop foot foot-tui kitty kitty-tui snappy-switcher superfile term yazi; do \
 		rm -rf "$(DESTDIR)$(PREFIX)/share/argvus/$$dir"; \
 	done
 	$(RM) "$(DESTDIR)$(PREFIX)/share/argvus/scripts/apps/yazi-open-smart.sh"
@@ -34,7 +37,8 @@ uninstall:
 validate:
 	@set -eu; \
 	test -x bin/argvus; \
-	for dir in bottom btop foot kitty superfile term yazi; do test -d "config/$$dir"; done; \
+	test -x bin/argvus-tui-terminal; \
+	for dir in bottom btop foot foot-tui kitty kitty-tui superfile term yazi; do test -d "config/$$dir"; done; \
 	scripts=$$(find bin config -type f \( -name '*.sh' -o -path '*/bin/*' \) | sort); \
 	for script in $$scripts; do sh -n "$$script"; done; \
 	if command -v shellcheck >/dev/null 2>&1; then \

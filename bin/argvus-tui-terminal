@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+# Launch ARGVUS-owned TUI windows with a dedicated font profile.
+
+set -eu
+
+ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}/scripts/argvus/bootstrap.sh}"
+# shellcheck disable=SC1090,SC1091
+. "$ARGVUS_BOOTSTRAP"
+
+_class="argvus-tui"
+
+case "${1:-}" in
+  --class)
+    [ "$#" -ge 2 ] || {
+      printf 'argvus-tui-terminal: --class requires a value\n' >&2
+      exit 1
+    }
+    _class="$2"
+    shift 2
+    ;;
+  --class=*)
+    _class="${1#--class=}"
+    shift
+    ;;
+esac
+
+if [ "${1:-}" = "--" ]; then
+  shift
+fi
+
+case "${TERM##*/}" in
+  kitty)
+    exec kitty \
+      --class "$_class" \
+      --config "$(paths_config "kitty-tui/kitty.conf")" \
+      -e "$@"
+    ;;
+  foot|footclient)
+    exec "$TERM" \
+      --app-id "$_class" \
+      -c "$(paths_config "foot-tui/foot.ini")" \
+      -e "$@"
+    ;;
+  alacritty)
+    exec alacritty --class "$_class" -e "$@"
+    ;;
+  *)
+    exec "$TERM" -e "$@"
+    ;;
+esac
