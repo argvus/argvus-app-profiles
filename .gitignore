@@ -2,3 +2,4 @@
 argvus*.tar.gz
 /target
 /tmp
+/dist/
