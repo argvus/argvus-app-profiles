@@ -28,6 +28,19 @@ if [ "${1:-}" = "--" ]; then
   shift
 fi
 
+_font_profile="terminal"
+case "$_class" in
+  argvus-file-manager|*superfile*|*yazi*|*spf*) _font_profile="apps" ;;
+esac
+for _arg do
+  case "$_arg" in
+    --spf|spf|--superfile|superfile|--yazy|yazy|--yazi|yazi)
+      _font_profile="apps"
+      break
+      ;;
+  esac
+done
+
 font_state_value() {
   _key="$1"
   _fallback="$2"
@@ -39,11 +52,25 @@ font_state_value() {
   printf '%s\n' "$_fallback"
 }
 
+font_family() {
+  case "$_font_profile" in
+    apps) font_state_value apps_family "$(font_state_value default_family "Terminus (TTF)")" ;;
+    *) font_state_value terminal_family "$(font_state_value monospace_family "JetBrainsMono Nerd Font")" ;;
+  esac
+}
+
+font_size() {
+  case "$_font_profile" in
+    apps) font_state_value apps_size "$(font_state_value default_size 13)" ;;
+    *) font_state_value terminal_size "$(font_state_value monospace_size 13)" ;;
+  esac
+}
+
 runtime_kitty_config() {
   _src="$(paths_config "kitty-tui/kitty.conf")"
   _dst="$(paths_cache "kitty-tui/kitty.conf")"
-  _family="$(font_state_value monospace_family "Terminus (TTF)")"
-  _size="$(font_state_value monospace_size 13)"
+  _family="$(font_family)"
+  _size="$(font_size)"
   mkdir -p "${_dst%/*}"
   awk -v family="$_family" -v size="$_size.0" '
     /^[[:space:]]*font_family[[:space:]]+/ { print "font_family      " family; next }
@@ -56,8 +83,8 @@ runtime_kitty_config() {
 runtime_foot_config() {
   _src="$(paths_config "foot-tui/foot.ini")"
   _dst="$(paths_cache "foot-tui/foot.ini")"
-  _family="$(font_state_value monospace_family "Terminus (TTF)")"
-  _size="$(font_state_value monospace_size 14)"
+  _family="$(font_family)"
+  _size="$(font_size)"
   mkdir -p "${_dst%/*}"
   awk -v family="$_family" -v size="$_size" '
     /^[[:space:]]*font=/ { print "font=" family ":size=" size ", Noto Color Emoji:size=12"; next }

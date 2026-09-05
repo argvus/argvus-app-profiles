@@ -18,8 +18,10 @@ repository:
 
 It also installs `/usr/bin/argvus`, the compatibility command used by current
 ARGVUS bindings and aliases, and `/usr/bin/argvus-tui-terminal`, the dedicated
-terminal launcher for desktop-opened TUI windows that should use Terminus
-without changing the normal terminal profile.
+terminal launcher for desktop-opened TUI windows. Terminal and TUI launchers use
+the Terminal font selected in `argvus-settings`. File-manager TUIs such as
+`superfile` and `yazi` use the Applications font when launched by ARGVUS, while
+the app profiles remain owned by this package.
 
 ```sh
 argvus --btop
