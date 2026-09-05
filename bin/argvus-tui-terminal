@@ -28,17 +28,55 @@ if [ "${1:-}" = "--" ]; then
   shift
 fi
 
+font_state_value() {
+  _key="$1"
+  _fallback="$2"
+  _fonts_file="${ARGVUS_CONFIG_HOME}/argvus/fonts.conf"
+  if [ -f "$_fonts_file" ]; then
+    _value="$(sed -n "s|^${_key}=||p" "$_fonts_file" | head -n1)"
+    [ -n "$_value" ] && { printf '%s\n' "$_value"; return 0; }
+  fi
+  printf '%s\n' "$_fallback"
+}
+
+runtime_kitty_config() {
+  _src="$(paths_config "kitty-tui/kitty.conf")"
+  _dst="$(paths_cache "kitty-tui/kitty.conf")"
+  _family="$(font_state_value monospace_family "Terminus (TTF)")"
+  _size="$(font_state_value monospace_size 13)"
+  mkdir -p "${_dst%/*}"
+  awk -v family="$_family" -v size="$_size.0" '
+    /^[[:space:]]*font_family[[:space:]]+/ { print "font_family      " family; next }
+    /^[[:space:]]*font_size[[:space:]]+/ { print "font_size        " size; next }
+    { print }
+  ' "$_src" > "$_dst"
+  printf '%s\n' "$_dst"
+}
+
+runtime_foot_config() {
+  _src="$(paths_config "foot-tui/foot.ini")"
+  _dst="$(paths_cache "foot-tui/foot.ini")"
+  _family="$(font_state_value monospace_family "Terminus (TTF)")"
+  _size="$(font_state_value monospace_size 14)"
+  mkdir -p "${_dst%/*}"
+  awk -v family="$_family" -v size="$_size" '
+    /^[[:space:]]*font=/ { print "font=" family ":size=" size ", Noto Color Emoji:size=12"; next }
+    { print }
+  ' "$_src" > "$_dst"
+  printf '%s\n' "$_dst"
+}
+
 case "${TERM##*/}" in
   kitty)
     exec kitty \
       --class "$_class" \
-      --config "$(paths_config "kitty-tui/kitty.conf")" \
+      --config "$(runtime_kitty_config)" \
       -e "$@"
     ;;
   foot|footclient)
     exec "$TERM" \
       --app-id "$_class" \
-      -c "$(paths_config "foot-tui/foot.ini")" \
+      -c "$(runtime_foot_config)" \
       -e "$@"
     ;;
   alacritty)
