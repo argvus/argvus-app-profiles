@@ -29,7 +29,8 @@ argvus --yazy
 argvus --setup
 argvus --about
 argvus --calendar
-argvus --default-apps
+argvus --default-apps    # opens argvus-settings --page apps
+argvus --settings
 argvus --storage
 ```
 

@@ -4,7 +4,7 @@
 ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}/scripts/argvus/bootstrap.sh}"
 . "$ARGVUS_BOOTSTRAP"
 
-# Default apps resolve from the argvus-default-apps state (via variables.sh),
+# Default apps resolve from the argvus-settings Apps state (via variables.sh),
 # falling back to the Argvus built-ins.
 EDITOR="${TERMINAL_EDITOR:-vim}"
 TEXT_EDITOR="${TEXT_EDITOR:-mousepad}"

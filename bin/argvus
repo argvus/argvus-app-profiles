@@ -13,11 +13,12 @@ Usage:
   argvus --yazy [yazi options]
   argvus --about [argvus-about options]
   argvus --calendar [argvus-calendar options]
-  argvus --default-apps [argvus-default-apps options]
+  argvus --default-apps [argvus-settings Apps options]
+  argvus --settings [argvus-settings options]
   argvus --storage [argvus-storage options]
 
 Aliases:
-  argvus setup | btop | btm | spf | yazi | about | calendar | default-apps | storage
+  argvus setup | btop | btm | spf | yazi | about | calendar | default-apps | settings | storage
   argvus --yazi
 
 Setup options:
@@ -370,11 +371,13 @@ run_calendar() {
 }
 
 run_default_apps() {
-  require_command argvus-default-apps
-  if [ "$#" -eq 0 ]; then
-    set -- show
-  fi
-  exec argvus-default-apps "$@"
+  require_command argvus-settings
+  exec argvus-settings --page apps "$@"
+}
+
+run_settings() {
+  require_command argvus-settings
+  exec argvus-settings "$@"
 }
 
 run_storage() {
@@ -417,6 +420,10 @@ case "${1:-}" in
   --default-apps|default-apps)
     shift
     run_default_apps "$@"
+    ;;
+  --settings|settings)
+    shift
+    run_settings "$@"
     ;;
   --storage|storage)
     shift
