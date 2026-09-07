@@ -66,20 +66,6 @@ font_size() {
   esac
 }
 
-runtime_kitty_config() {
-  _src="$(paths_config "kitty-tui/kitty.conf")"
-  _dst="$(paths_cache "kitty-tui/kitty.conf")"
-  _family="$(font_family)"
-  _size="$(font_size)"
-  mkdir -p "${_dst%/*}"
-  awk -v family="$_family" -v size="$_size.0" '
-    /^[[:space:]]*font_family[[:space:]]+/ { print "font_family      " family; next }
-    /^[[:space:]]*font_size[[:space:]]+/ { print "font_size        " size; next }
-    { print }
-  ' "$_src" > "$_dst"
-  printf '%s\n' "$_dst"
-}
-
 runtime_foot_config() {
   _src="$(paths_config "foot-tui/foot.ini")"
   _dst="$(paths_cache "foot-tui/foot.ini")"
@@ -94,10 +80,11 @@ runtime_foot_config() {
 }
 
 case "${TERM##*/}" in
-  kitty)
-    exec kitty \
+  argvus-terminal|kitty)
+    exec argvus-terminal \
       --class "$_class" \
-      --config "$(runtime_kitty_config)" \
+      --font-profile "$_font_profile" \
+      --tui \
       -e "$@"
     ;;
   foot|footclient)

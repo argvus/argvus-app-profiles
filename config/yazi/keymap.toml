@@ -16,7 +16,7 @@ desc = "Renomear"
 # --- Open folder in terminal ---
 [[mgr.prepend_keymap]]
 on   = "<C-t>"
-run = 'shell --orphan "kitty --directory=\"$1\"" sh "$@"'
+run = 'shell --orphan "argvus-terminal --directory=\"$1\"" sh "$@"'
 desc = "Abrir no terminal"
 
 # --- Move to trash ---
@@ -41,7 +41,7 @@ desc = "Esvaziar lixeira (Smog)"
 # --- Open folder in terminal ---
 [[mgr.prepend_keymap]]
 on   = ["\\", "t"]
-run = 'shell --orphan "kitty --directory=\"$1\"" sh "$@"'
+run = 'shell --orphan "argvus-terminal --directory=\"$1\"" sh "$@"'
 desc = "Abrir no terminal"
 
 # --- Open file intelligently ---

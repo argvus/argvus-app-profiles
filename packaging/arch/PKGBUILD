@@ -13,7 +13,7 @@ depends=(
   'btop'
   'foot'
   'jq'
-  'kitty'
+  'argvus-terminal'
   'superfile'
   'yazi'
 )
