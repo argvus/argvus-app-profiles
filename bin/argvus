@@ -7,7 +7,8 @@ usage() {
   cat <<'EOF'
 Usage:
   argvus --setup [setup options]
-  argvus --btop [btop options]
+  argvus --system-monitor [btop options]
+  argvus --terminal [terminal options]
   argvus --btm [bottom options]
   argvus --spf [superfile options]
   argvus --yazy [yazi options]
@@ -18,7 +19,7 @@ Usage:
   argvus --storage [argvus-storage options]
 
 Aliases:
-  argvus setup | btop | btm | spf | yazi | about | calendar | default-apps | settings | storage
+  argvus setup | system-monitor | terminal | btm | spf | yazi | about | calendar | default-apps | settings | storage
   argvus --yazi
 
 Setup options:
@@ -179,24 +180,14 @@ Use --force to replace it after a backup."
   log "Done. Copied files are now user overrides."
 }
 
-run_btop() {
-  source_bootstrap
-  if has_arg '-c --config --config=* --themes-dir --themes-dir=*' "$@"; then
-    exec btop "$@"
-  fi
-  _argvus_btop_dir="$(materialize_argvus_btop_config)"
-  _native_dir="${ARGVUS_CONFIG_HOME}/btop"
-  if [ -e "$_native_dir" ] || [ -L "$_native_dir" ]; then
-    _native_conf="$_native_dir/btop.conf"
-    if should_manage_btop_config "$_native_conf"; then
-      _theme="$(read_active_theme)"
-      sed -i "s|color_theme = .*|color_theme = \"${_argvus_btop_dir}/themes/${_theme}/theme.theme\"|" "$_native_conf"
-    fi
-    XDG_CONFIG_HOME="$ARGVUS_CONFIG_HOME"
-    export XDG_CONFIG_HOME
-    exec btop "$@"
-  fi
-  exec btop --config "$_argvus_btop_dir/btop.conf" --themes-dir "$_argvus_btop_dir/themes" "$@"
+run_system_monitor() {
+  require_command argvus-system-monitor
+  exec argvus-system-monitor "$@"
+}
+
+run_terminal() {
+  require_command argvus-terminal
+  exec argvus-terminal "$@"
 }
 
 run_btm() {
@@ -246,43 +237,6 @@ read_active_theme() {
     sed -n '1p' "$_active_file"
   else
     printf 'argvus-dark-aether\n'
-  fi
-}
-
-should_manage_btop_config() {
-  _conf="$1"
-  [ -f "$_conf" ] || return 0
-  _theme="$(sed -n 's/^[[:space:]]*color_theme[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' "$_conf" | head -n1)"
-  case "$_theme" in
-    ''|Default|*argvus*) return 0 ;;
-    *) return 1 ;;
-  esac
-}
-
-materialize_argvus_btop_config() {
-  _theme="$(read_active_theme)"
-  _dst="$(paths_user_config btop)"
-  _src="$(paths_system_config btop)"
-
-  if [ ! -d "$_dst" ] && [ -d "$_src" ]; then
-    mkdir -p "$_dst"
-    cp -R "$_src/." "$_dst/"
-  elif [ -d "$_src" ]; then
-    mkdir -p "$_dst"
-    if [ -f "$_src/btop.conf" ] && [ ! -e "$_dst/btop.conf" ]; then
-      cp "$_src/btop.conf" "$_dst/btop.conf"
-    fi
-    if [ -d "$_src/themes/${_theme}" ]; then
-      mkdir -p "$_dst/themes/${_theme}"
-      cp -R "$_src/themes/${_theme}/." "$_dst/themes/${_theme}/"
-    fi
-  fi
-
-  if [ -f "$_dst/btop.conf" ] && [ -f "$_dst/themes/${_theme}/theme.theme" ]; then
-    sed -i "s|color_theme = .*|color_theme = \"${_dst}/themes/${_theme}/theme.theme\"|" "$_dst/btop.conf"
-    printf '%s\n' "$_dst"
-  else
-    paths_config btop
   fi
 }
 
@@ -393,9 +347,13 @@ case "${1:-}" in
     shift
     run_setup "$@"
     ;;
-  --btop|btop)
+  --system-monitor|system-monitor|--btop|btop)
     shift
-    run_btop "$@"
+    run_system_monitor "$@"
+    ;;
+  --terminal|terminal)
+    shift
+    run_terminal "$@"
     ;;
   --btm|btm|--bottom|bottom)
     shift

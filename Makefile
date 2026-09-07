@@ -28,7 +28,7 @@ install:
 uninstall:
 	$(RM) "$(DESTDIR)$(PREFIX)/bin/argvus"
 	$(RM) "$(DESTDIR)$(PREFIX)/bin/argvus-tui-terminal"
-	for dir in bottom btop foot foot-tui snappy-switcher superfile term yazi; do \
+	for dir in bottom foot foot-tui snappy-switcher superfile term yazi; do \
 		rm -rf "$(DESTDIR)$(PREFIX)/share/argvus/$$dir"; \
 	done
 	$(RM) "$(DESTDIR)$(PREFIX)/share/argvus/scripts/apps/yazi-open-smart.sh"
@@ -38,7 +38,7 @@ validate:
 	@set -eu; \
 	test -x bin/argvus; \
 	test -x bin/argvus-tui-terminal; \
-	for dir in bottom btop foot foot-tui superfile term yazi; do test -d "config/$$dir"; done; \
+	for dir in bottom foot foot-tui superfile term yazi; do test -d "config/$$dir"; done; \
 	scripts=$$(find bin config -type f \( -name '*.sh' -o -path '*/bin/*' \) | sort); \
 	for script in $$scripts; do sh -n "$$script"; done; \
 	if command -v shellcheck >/dev/null 2>&1; then \

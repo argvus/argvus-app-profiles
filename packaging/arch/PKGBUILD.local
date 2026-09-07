@@ -9,8 +9,8 @@ license=('GPL-3.0-only')
 depends=(
   'argvus-snappy-switcher'
   'argvus-session'
+  'argvus-system-monitor'
   'bottom'
-  'btop'
   'foot'
   'jq'
   'argvus-terminal'
