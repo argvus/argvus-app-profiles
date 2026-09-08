@@ -15,8 +15,6 @@ help:
 	@echo "  make validate"
 
 install:
-	$(INSTALL) -Dm755 bin/argvus \
-		"$(DESTDIR)$(PREFIX)/bin/argvus"
 	$(INSTALL) -Dm755 bin/argvus-tui-terminal \
 		"$(DESTDIR)$(PREFIX)/bin/argvus-tui-terminal"
 	$(INSTALL) -dm755 "$(DESTDIR)$(PREFIX)/share/argvus"
@@ -26,7 +24,6 @@ install:
 		"$(DESTDIR)$(PREFIX)/share/licenses/argvus-app-profiles/LICENSE"
 
 uninstall:
-	$(RM) "$(DESTDIR)$(PREFIX)/bin/argvus"
 	$(RM) "$(DESTDIR)$(PREFIX)/bin/argvus-tui-terminal"
 	for dir in bottom foot foot-tui snappy-switcher superfile term yazi; do \
 		rm -rf "$(DESTDIR)$(PREFIX)/share/argvus/$$dir"; \
@@ -36,7 +33,6 @@ uninstall:
 
 validate:
 	@set -eu; \
-	test -x bin/argvus; \
 	test -x bin/argvus-tui-terminal; \
 	for dir in bottom foot foot-tui superfile term yazi; do test -d "config/$$dir"; done; \
 	scripts=$$(find bin config -type f \( -name '*.sh' -o -path '*/bin/*' \) | sort); \
