@@ -33,7 +33,7 @@ argvus --about
 argvus --calendar
 argvus --default-apps    # opens argvus-settings --page apps
 argvus --settings
-argvus --storage
+argvus --removable-devices
 ```
 
 The package intentionally does not depend on the `argvus` metapackage to avoid a
