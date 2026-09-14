@@ -3,7 +3,7 @@
 
 set -eu
 
-ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}/scripts/argvus/bootstrap.sh}"
+ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}/session/sh/bootstrap.sh}"
 # shellcheck disable=SC1090,SC1091
 . "$ARGVUS_BOOTSTRAP"
 
@@ -83,7 +83,7 @@ font_size() {
 }
 
 runtime_foot_config() {
-  _src="$(paths_config "foot-tui/foot.ini")"
+  _src="$(paths_config "app-profiles/config/foot-tui/foot.ini")"
   _dst="$(paths_cache "foot-tui/foot.ini")"
   _family="$(font_family)"
   _size="$(font_size)"
