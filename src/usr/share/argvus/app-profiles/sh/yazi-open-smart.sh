@@ -39,8 +39,25 @@ if [ -d "$target" ]; then
         "$(paths_config "app-profiles/config/yazi")/." "$_yazi_config/"
     cp "$_yazi_keymap" "$_yazi_config/keymap.toml"
 
-    # shellcheck disable=SC2086
-    YAZI_CONFIG_HOME="$_yazi_config" "$TERM" -e $YAZI "$target" >/dev/null 2>&1 &
+    case "$YAZI" in
+        "argvus --spf")
+            YAZI_CONFIG_HOME="$_yazi_config" argvus-tui-terminal \
+                --class argvus-file-manager --term foot -- \
+                argvus --spf "$target" >/dev/null 2>&1 &
+            ;;
+        "argvus --yazy"|"argvus --yazi")
+            YAZI_CONFIG_HOME="$_yazi_config" argvus-tui-terminal \
+                --class argvus-file-manager --term foot -- \
+                argvus --yazy "$target" >/dev/null 2>&1 &
+            ;;
+        *)
+            # Keep arbitrary configured terminal file managers working while
+            # the ARGVUS Superfile/Yazi wrappers use the dedicated Foot path.
+            # shellcheck disable=SC2086
+            YAZI_CONFIG_HOME="$_yazi_config" foot -e $YAZI "$target" \
+                >/dev/null 2>&1 &
+            ;;
+    esac
     exit 0
 fi
 
