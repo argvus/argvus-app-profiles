@@ -47,13 +47,18 @@ while [ "$#" -gt 0 ]; do
 done
 
 _font_profile="terminal"
+_file_manager_profile=0
 case "$_class" in
-  argvus-file-manager|*superfile*|*yazi*|*spf*) _font_profile="apps" ;;
+  argvus-file-manager|*superfile*|*yazi*|*spf*)
+    _font_profile="apps"
+    _file_manager_profile=1
+    ;;
 esac
 for _arg do
   case "$_arg" in
     --spf|spf|--superfile|superfile|--yazy|yazy|--yazi|yazi)
       _font_profile="apps"
+      _file_manager_profile=1
       break
       ;;
   esac
@@ -79,7 +84,13 @@ font_family() {
 
 font_size() {
   case "$_font_profile" in
-    apps) font_state_value apps_size "$(font_state_value default_size 12)" ;;
+    apps)
+      if [ "$_file_manager_profile" -eq 1 ]; then
+        font_state_value terminal_size "$(font_state_value monospace_size 13)"
+      else
+        font_state_value apps_size "$(font_state_value default_size 12)"
+      fi
+      ;;
     *) font_state_value terminal_size "$(font_state_value monospace_size 13)" ;;
   esac
 }
@@ -97,13 +108,39 @@ runtime_foot_config() {
   printf '%s\n' "$_dst"
 }
 
+runtime_kitty_config() {
+  _src="$(paths_cache "argvus-terminal/kitty-tui-apps.conf")"
+  [ -f "$_src" ] || _src="$(paths_config "terminal/config/kitty-tui/kitty.conf")"
+  if [ "$_file_manager_profile" -eq 1 ]; then
+    _dst="$(paths_cache "kitty-tui/kitty-file-manager.conf")"
+  else
+    _dst="$(paths_cache "kitty-tui/kitty-${_font_profile}.conf")"
+  fi
+  _family="$(font_family)"
+  _size="$(font_size)"
+  mkdir -p "${_dst%/*}"
+  awk -v family="$_family" -v size="$_size" '
+    /^[[:space:]]*font_family[[:space:]]+/ { print "font_family      " family; next }
+    /^[[:space:]]*font_size[[:space:]]+/ { print "font_size        " size; next }
+    { print }
+  ' "$_src" > "$_dst"
+  printf '%s\n' "$_dst"
+}
+
 _backend="${_term_override:-${TERM##*/}}"
 case "$_backend" in
-  argvus-terminal|kitty)
+  argvus-terminal)
     exec argvus-terminal \
       --class "$_class" \
       --font-profile "$_font_profile" \
       --tui \
+      -e "$@"
+    ;;
+  kitty)
+    _kitty_config="$(runtime_kitty_config)"
+    exec kitty \
+      --class "$_class" \
+      --config "$_kitty_config" \
       -e "$@"
     ;;
   foot|footclient)

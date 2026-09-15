@@ -42,19 +42,19 @@ if [ -d "$target" ]; then
     case "$YAZI" in
         "argvus --spf")
             YAZI_CONFIG_HOME="$_yazi_config" argvus-tui-terminal \
-                --class argvus-file-manager --term foot -- \
+                --class argvus-file-manager --term kitty -- \
                 argvus --spf "$target" >/dev/null 2>&1 &
             ;;
         "argvus --yazy"|"argvus --yazi")
             YAZI_CONFIG_HOME="$_yazi_config" argvus-tui-terminal \
-                --class argvus-file-manager --term foot -- \
+                --class argvus-file-manager --term kitty -- \
                 argvus --yazy "$target" >/dev/null 2>&1 &
             ;;
         *)
             # Keep arbitrary configured terminal file managers working while
-            # the ARGVUS Superfile/Yazi wrappers use the dedicated Foot path.
+            # the ARGVUS Superfile/Yazi wrappers use the dedicated Kitty path.
             # shellcheck disable=SC2086
-            YAZI_CONFIG_HOME="$_yazi_config" foot -e $YAZI "$target" \
+            YAZI_CONFIG_HOME="$_yazi_config" kitty -e $YAZI "$target" \
                 >/dev/null 2>&1 &
             ;;
     esac
