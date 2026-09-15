@@ -25,8 +25,22 @@ target=$1
 [ -z "$target" ] && exit 1
 
 if [ -d "$target" ]; then
+    # Generate the localized keymap once for this Yazi process. The main Yazi
+    # profile remains the canonical en-US configuration when used directly.
+    _yazi_keymap="$(mktemp "${TMPDIR:-/tmp}/argvus-yazi-keymap.XXXXXX")"
+    trap 'rm -f "$_yazi_keymap"' EXIT HUP INT TERM
+    argvus-app-profiles-yazi-keymap \
+        "$(paths_config "app-profiles/config/yazi/keymap.toml")" \
+        "$_yazi_keymap"
+
+    _yazi_config="$(mktemp -d "${TMPDIR:-/tmp}/argvus-yazi-config.XXXXXX")"
+    trap 'rm -f "$_yazi_keymap"; rm -rf "$_yazi_config"' EXIT HUP INT TERM
+    cp -R --no-preserve=ownership \
+        "$(paths_config "app-profiles/config/yazi")/." "$_yazi_config/"
+    cp "$_yazi_keymap" "$_yazi_config/keymap.toml"
+
     # shellcheck disable=SC2086
-    "$TERM" -e $YAZI "$target" >/dev/null 2>&1 &
+    YAZI_CONFIG_HOME="$_yazi_config" "$TERM" -e $YAZI "$target" >/dev/null 2>&1 &
     exit 0
 fi
 

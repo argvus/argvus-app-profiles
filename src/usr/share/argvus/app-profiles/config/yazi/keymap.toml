@@ -11,61 +11,61 @@ run = "noop"
 [[mgr.prepend_keymap]]
 on = "<F2>"
 run = "rename"
-desc = "Renomear"
+desc = "Rename"
 
 # --- Open folder in terminal ---
 [[mgr.prepend_keymap]]
 on   = "<C-t>"
 run = 'shell --orphan "argvus-terminal --directory=\"$1\"" sh "$@"'
-desc = "Abrir no terminal"
+desc = "Open in terminal"
 
 # --- Move to trash ---
 [[mgr.prepend_keymap]]
 on   = "<Delete>"
 run  = "remove"
-desc = "Mover para lixeira"
+desc = "Move to trash"
 
 # --- Shift+Delete → delete permanent with security ---
 # Install: https://orbitbits.github.io/smog/
 [[mgr.prepend_keymap]]
 on   = "<S-Delete>"
 run  = "shell 'smog %h --confirm' --block"
-desc = "Destruir com segurança (Smog)"
+desc = "Securely destroy (Smog)"
 
 # --- Empty trash with security ---
 [[mgr.prepend_keymap]]
 on   = ["\\", "?"]
 run  = "shell 'smog --trash --confirm' --block"
-desc = "Esvaziar lixeira (Smog)"
+desc = "Empty trash (Smog)"
 
 # --- Open folder in terminal ---
 [[mgr.prepend_keymap]]
 on   = ["\\", "t"]
 run = 'shell --orphan "argvus-terminal --directory=\"$1\"" sh "$@"'
-desc = "Abrir no terminal"
+desc = "Open in terminal"
 
 # --- Open file intelligently ---
 [[mgr.prepend_keymap]]
 on = ["\\", "o"]
 run = 'shell "/usr/share/argvus/app-profiles/sh/yazi-open-smart.sh \"$0\"" --orphan'
-desc = "Abrir arquivo inteligentemente"
+desc = "Open file intelligently"
 
 # --- Open in Visual Studio Code  ---
 [[mgr.prepend_keymap]]
 on   = ["\\", "c"]
 run  = "shell 'code %h' --orphan"
-desc = "Abrir com VSCode"
+desc = "Open with VSCode"
 
 # --- Zip ---
 [[mgr.prepend_keymap]]
 on   = ["\\", "z"]
 run  = '''shell 'f="%h"; zip -r "$(dirname "$f")/$(basename "${f%.*}").zip" "$f"' --block'''
-desc = "Zipar (zip)"
+desc = "Create ZIP archive (zip)"
 
 # --- Open Xarchiver/File Roller  ---
 [[mgr.prepend_keymap]]
 on   = ["\\", "Z"]
 # run  = "shell 'xarchiver -c %h' --orphan"
-# desc = "  Abrir no Xarchiver"
+# desc = "  Open with Xarchiver"
 run  = "shell 'file-roller --add %h' --orphan"
-desc = "Abrir no File Roller"
+desc = "Open with File Roller"

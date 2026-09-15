@@ -10,6 +10,7 @@ depends=(
   'argvus-snappy-switcher'
   'argvus-session'
   'argvus-system-monitor'
+  'argvus-i18n'
   'foot'
   'jq'
   'argvus-terminal'

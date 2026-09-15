@@ -17,6 +17,8 @@ help:
 install:
 	$(INSTALL) -Dm755 bin/argvus-tui-terminal \
 		"$(DESTDIR)$(PREFIX)/bin/argvus-tui-terminal"
+	$(INSTALL) -Dm755 src/usr/share/argvus/app-profiles/sh/yazi-keymap.sh \
+		"$(DESTDIR)$(PREFIX)/bin/argvus-app-profiles-yazi-keymap"
 	$(INSTALL) -dm755 "$(DESTDIR)$(PREFIX)/share/argvus/app-profiles"
 	cp -R --no-preserve=ownership src/usr/share/argvus/app-profiles/. "$(DESTDIR)$(PREFIX)/share/argvus/app-profiles/"
 	find "$(DESTDIR)$(PREFIX)/share/argvus/app-profiles/sh" -type f -name '*.sh' -exec chmod 755 {} \; 2>/dev/null || true

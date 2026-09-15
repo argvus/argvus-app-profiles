@@ -6,6 +6,8 @@ set -eu
 ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}/session/sh/bootstrap.sh}"
 # shellcheck disable=SC1090,SC1091
 . "$ARGVUS_BOOTSTRAP"
+# shellcheck disable=SC1091
+. /usr/share/argvus/lib/i18n.sh
 
 _class="argvus-tui"
 _term_override=""
@@ -14,7 +16,7 @@ while [ "$#" -gt 0 ]; do
   case "$1" in
     --class)
       [ "$#" -ge 2 ] || {
-        printf 'argvus-tui-terminal: --class requires a value\n' >&2
+        printf '%s\n' "$(argvus_tr app-profiles launcher.class_requires_value)" >&2
         exit 1
       }
       _class="$2"
@@ -26,7 +28,7 @@ while [ "$#" -gt 0 ]; do
       ;;
     --term|--terminal)
       [ "$#" -ge 2 ] || {
-        printf 'argvus-tui-terminal: %s requires a value\n' "$1" >&2
+        printf '%s\n' "$(argvus_tr app-profiles launcher.option_requires_value option="$1")" >&2
         exit 1
       }
       _term_override="$2"
