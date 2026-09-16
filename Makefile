@@ -1,52 +1,53 @@
-PREFIX ?= /usr
-DESTDIR ?=
-INSTALL ?= install
-RM ?= rm -f
+.PHONY: help build package install install-package clean validate lint spellcheck changelog
 
 .DEFAULT_GOAL := help
 
-.PHONY: help install uninstall validate build clean
-
 help:
 	@echo "Available targets:"
-	@echo "  make build"
-	@echo "  make install"
-	@echo "  make uninstall"
-	@echo "  make validate"
-
-install:
-	$(INSTALL) -Dm755 bin/argvus-tui-terminal \
-		"$(DESTDIR)$(PREFIX)/bin/argvus-tui-terminal"
-	$(INSTALL) -Dm755 src/usr/share/argvus/app-profiles/sh/yazi-keymap.sh \
-		"$(DESTDIR)$(PREFIX)/bin/argvus-app-profiles-yazi-keymap"
-	$(INSTALL) -dm755 "$(DESTDIR)$(PREFIX)/share/argvus/app-profiles"
-	cp -R --no-preserve=ownership src/usr/share/argvus/app-profiles/. "$(DESTDIR)$(PREFIX)/share/argvus/app-profiles/"
-	find "$(DESTDIR)$(PREFIX)/share/argvus/app-profiles/sh" -type f -name '*.sh' -exec chmod 755 {} \; 2>/dev/null || true
-	$(INSTALL) -Dm644 LICENSE \
-		"$(DESTDIR)$(PREFIX)/share/licenses/argvus-app-profiles/LICENSE"
-
-uninstall:
-	$(RM) "$(DESTDIR)$(PREFIX)/bin/argvus-tui-terminal"
-	rm -rf "$(DESTDIR)$(PREFIX)/share/argvus/app-profiles"
-	$(RM) "$(DESTDIR)$(PREFIX)/share/licenses/argvus-app-profiles/LICENSE"
-
-validate:
-	@set -eu; \
-	test -x bin/argvus-tui-terminal; \
-	test -d src/usr/share/argvus/app-profiles/config; \
-	test -d src/usr/share/argvus/app-profiles/sh; \
-	scripts=$$(find bin src -type f \( -name '*.sh' -o -path '*/bin/*' \) | sort); \
-	for script in $$scripts; do sh -n "$$script"; done; \
-	if command -v shellcheck >/dev/null 2>&1; then \
-		for script in $$scripts; do shellcheck -e SC1090 -e SC1091 -e SC2034 "$$script"; done; \
-	else \
-		echo "shellcheck not found; skipped"; \
-	fi
-	@echo "argvus-app-profiles validation ok"
+	@echo "  make build           - build the package into build/"
+	@echo "  make package         - alias for make build"
+	@echo "  make install         - install the single local package (sudo pacman -U)"
+	@echo "  make clean           - remove build/ outputs"
+	@echo "  make validate        - run required repository and PKGBUILD checks"
+	@echo "  make lint            - run local static checks"
+	@echo "  make spellcheck      - run cspell (if installed)"
+	@echo "  make changelog       - regenerate CHANGELOG.md with git-cliff"
 
 build:
-	@tools/build-local-package.sh
+	@tools/sh/pkgbuild_local.sh
+
+package: build
+
+install:
+	@set -e; \
+	package="$$(find build/dist -maxdepth 1 -type f -name '*.pkg.tar.zst' -print | sort | head -n 1)"; \
+	count="$$(find build/dist -maxdepth 1 -type f -name '*.pkg.tar.zst' -print | wc -l)"; \
+	if [ "$$count" -ne 1 ] || [ -z "$$package" ]; then \
+		echo "Expected exactly one package in build/dist; run 'make clean && make build'." >&2; \
+		exit 1; \
+	fi; \
+	sudo pacman -U "$$package"
+
+install-package: install
+
+validate:
+	@tools/sh/validate.sh
+
+lint:
+	@shellcheck tools/sh/*.sh packaging/arch/common/*.sh src/usr/bin/argvus-hello
+	@bash -n tools/sh/*.sh packaging/arch/common/*.sh src/usr/bin/argvus-hello
+	@git diff --check
+	@echo "Lint OK"
+
+spellcheck:
+	@if command -v cspell >/dev/null 2>&1; then \
+		cspell --config cspell.json .; \
+	else \
+		echo "cspell is not installed; skipping (CI runs it)." >&2; \
+	fi
+
+changelog:
+	@git-cliff -o CHANGELOG.md
 
 clean:
-	rm -rf dist
-	rm -f packaging/arch/*.zst packaging/arch/*.tar.gz
+	rm -rf -- build/

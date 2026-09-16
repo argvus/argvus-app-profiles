@@ -6,7 +6,6 @@ ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}
 
 # Default apps resolve from the argvus-control-center Apps state (via variables.sh),
 # falling back to the Argvus built-ins.
-EDITOR="${TERMINAL_EDITOR:-vim}"
 TEXT_EDITOR="${TEXT_EDITOR:-mousepad}"
 YAZI="$FILE_MANAGER"
 [ -n "$YAZI" ] || YAZI="/usr/bin/yazi"
