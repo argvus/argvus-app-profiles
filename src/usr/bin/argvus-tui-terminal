@@ -11,6 +11,7 @@ ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}
 
 _class="argvus-tui"
 _term_override=""
+_terminal_profile="default"
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -36,6 +37,18 @@ while [ "$#" -gt 0 ]; do
       ;;
     --term=*|--terminal=*)
       _term_override="${1#*=}"
+      shift
+      ;;
+    --profile)
+      [ "$#" -ge 2 ] || {
+        printf '%s\n' "$(argvus_tr app-profiles launcher.option_requires_value option="$1")" >&2
+        exit 1
+      }
+      _terminal_profile="$2"
+      shift 2
+      ;;
+    --profile=*)
+      _terminal_profile="${1#--profile=}"
       shift
       ;;
     --)
@@ -109,9 +122,17 @@ runtime_foot_config() {
 }
 
 runtime_kitty_config() {
-  _src="$(paths_cache "argvus-terminal/kitty-tui-apps.conf")"
-  [ -f "$_src" ] || _src="$(paths_config "terminal/config/kitty-tui/kitty.conf")"
-  if [ "$_file_manager_profile" -eq 1 ]; then
+  if [ "$_terminal_profile" = "greeter" ] && command -v argvus-terminal >/dev/null 2>&1; then
+    # Materialize the active theme and user font settings before applying
+    # the Greeter-only Kitty policy below.
+    _src="$(argvus-terminal --print-tui-config)"
+  else
+    _src="$(paths_cache "argvus-terminal/kitty-tui-apps.conf")"
+    [ -f "$_src" ] || _src="$(paths_config "terminal/config/kitty-tui/kitty.conf")"
+  fi
+  if [ "$_terminal_profile" = "greeter" ]; then
+    _dst="$(paths_cache "kitty-tui/kitty-greeter.conf")"
+  elif [ "$_file_manager_profile" -eq 1 ]; then
     _dst="$(paths_cache "kitty-tui/kitty-file-manager.conf")"
   else
     _dst="$(paths_cache "kitty-tui/kitty-${_font_profile}.conf")"
@@ -124,6 +145,24 @@ runtime_kitty_config() {
     /^[[:space:]]*font_size[[:space:]]+/ { print "font_size        " size; next }
     { print }
   ' "$_src" > "$_dst"
+  if [ "$_terminal_profile" = "greeter" ]; then
+    cat >> "$_dst" <<'EOF'
+
+# ARGVUS Greeter policy: this is a runtime-only override. The regular Kitty
+# configuration and all user terminal sessions keep their tab behavior.
+tab_bar_style hidden
+map ctrl+alt+n no_op
+map ctrl+shift+t no_op
+map ctrl+q no_op
+map alt+1 no_op
+map alt+2 no_op
+map alt+3 no_op
+map alt+4 no_op
+map alt+5 no_op
+map ctrl+tab no_op
+map ctrl+shift+tab no_op
+EOF
+  fi
   printf '%s\n' "$_dst"
 }
 
