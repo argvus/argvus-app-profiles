@@ -1,0 +1,201 @@
+# Argvus palette
+# ---
+# bg         "#282A36"
+# bg-2       "#191A21"
+# ui         "#343746"
+# ui-2       "#44475A"
+# ui-3       "#424450"
+# tx-3       "#6272A4"
+# tx-2       "#6272A4"
+# tx         "#F8F8F2"
+# red-400     "#DE5735" re
+# orange-400  "#A39514" or
+# yellow-400  "#6272A4" ye
+# yellow-600  "#A39514" ye-2
+# green-400   "#BD93F9" gr
+# cyan-400    "#BD93F9" cy
+# cyan-600    "#0081D6" cy-2
+# cyan-700    "#0081D6" cy-700
+# cyan-900    "#21222C" cy-900
+# blue-400    "#BD93F9" bl
+# purple-400  "#627D8A" pu
+# magenta-400 "#DE5735" ma
+
+[app]
+overall = { bg = "#282A36" } # bg
+
+[mgr]
+cwd = { fg = "#F8F8F2", bold = true } # tx
+
+# Find
+find_keyword = { fg = "#BD93F9", reversed = true } # cy
+find_position = { fg = "#BD93F9", bold = true, italic = true } # cy
+
+# Marker
+marker_copied = { fg = "#BD93F9", bg = "#BD93F9" } # gr, gr
+marker_cut = { fg = "#DE5735", bg = "#DE5735" } # re, re
+marker_marked = { fg = "#0081D6", bg = "#0081D6" } # cy-700, cy-700
+marker_selected = { fg = "#BD93F9", bg = "#BD93F9" } # cy, cy
+
+# Count
+count_copied = { fg = "#BD93F9", bold = true, reversed = true } # gr
+count_cut = { fg = "#DE5735", bold = true, reversed = true } # re
+count_selected = { fg = "#BD93F9", bold = true, reversed = true } # cy
+
+# Border
+border_symbol = "│"
+border_style = { fg = "#343746" } # ui
+
+[indicator]
+parent = { underline = true }
+current = { fg = "#F8F8F2", bg = "#343746" } # tx, ui
+preview = { underline = true }
+padding = { open = "█", close = "█" }
+
+[tabs]
+active = { fg = "#F8F8F2", bg = "#424450", bold = true } # tx, ui-3
+inactive = { fg = "#6272A4", bg = "#343746" } # tx-2, ui
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+[mode]
+# Normal mode
+normal_main = { fg = "#F8F8F2", bg = "#424450", bold = true } # tx, ui-3
+normal_alt = { fg = "#6272A4", bg = "#343746" } # tx-2, ui
+
+# Select mode
+select_main = { fg = "#282A36", bg = "#BD93F9", bold = true } # bg, cy
+select_alt = { fg = "#BD93F9", bg = "#21222C" } # cy, cy-900
+
+# Unset mode
+unset_main = { fg = "#282A36", bg = "#BD93F9", bold = true } # bg, cy
+unset_alt = { fg = "#BD93F9", bg = "#21222C" } # cy, cy-900
+
+[status]
+overall = { fg = "#F8F8F2" } # tx
+
+# Permissions
+perm_type = { fg = "#BD93F9" } # bl
+perm_read = { fg = "#6272A4" } # ye
+perm_write = { fg = "#DE5735" } # re
+perm_exec = { fg = "#BD93F9" } # gr
+perm_sep = { fg = "#6272A4" } # tx-2
+
+# Progress
+progress_label = { fg = "#282A36" } # bg
+progress_normal = { fg = "#BD93F9", bg = "#0081D6" } # cy, cy-700
+progress_error = { bg = "#DE5735" } # re
+
+[which]
+cols = 3
+mask = { bg = "#191A21" } # bg-2
+cand = { fg = "#BD93F9", bold = true } # cy
+rest = { fg = "#BD93F9", italic = true } # cy
+desc = { fg = "#6272A4" } # tx-3
+separator = " "
+separator_style = { }
+
+[confirm]
+border = { fg = "#424450" } # ui-3
+title = { fg = "#6272A4", bold = true } # tx-3
+body = { fg = "#F8F8F2", bold = true } # tx
+list = { fg = "#F8F8F2" } # tx
+btn_yes = { fg = "#F8F8F2", bg = "#424450", bold = true } # tx, ui-3
+btn_no = { fg = "#6272A4", bg = "#343746" } # tx-2, ui
+
+[spot]
+border = { fg = "#424450" } # ui-3
+title = { fg = "#6272A4", bold = true } # tx-3
+tbl_col = { fg = "#6272A4" } # tx-2
+tbl_cell = { fg = "#F8F8F2", bg = "#343746" } # tx, ui
+
+[notify]
+# Notification title
+title_info = { fg = "#BD93F9" } # bl
+title_warn = { fg = "#A39514" } # or
+title_error = { fg = "#DE5735" } # re
+
+[pick]
+border = { fg = "#424450", bold = true } # ui-3
+active = { fg = "#F8F8F2" } # tx
+inactive = { fg = "#6272A4" } # tx-2
+
+[input]
+border = { fg = "#424450" } # ui-3
+title = { fg = "#6272A4", bold = true } # tx-3
+value = { fg = "#F8F8F2" } # tx
+selected = { bg = "#191A21" } # bg-2
+
+[cmp]
+border = { fg = "#424450", bold = true } # ui-3
+active = { fg = "#F8F8F2", bg = "#343746" } # tx, ui
+inactive = { fg = "#6272A4" } # tx-2
+
+[tasks]
+border = { fg = "#424450" } # ui-3
+title = { fg = "#6272A4", bold = true } # tx-3
+hovered = { fg = "#F8F8F2", bg = "#343746" } # tx, ui
+
+[help]
+on = { fg = "#BD93F9" } # bl
+run = { fg = "#BD93F9" } # cy
+desc = { fg = "#6272A4", italic = true } # tx-3
+hovered = { bg = "#343746" } # ui
+footer = { fg = "#282A36", bg = "#BD93F9", bold = true } # bg, cy
+
+[filetype]
+rules = [
+  # Empty files
+  { mime = "inode/empty", fg = "#6272A4" }, # tx-3
+
+  # Special files
+  { url = "*", is = "orphan", fg = "#6272A4" }, # tx-3
+  { url = "*/", is = "orphan", fg = "#6272A4" }, # tx-3
+  { url = "*", is = "link", fg = "#BD93F9" }, # cy
+  { url = "*/", is = "link", fg = "#BD93F9" }, # cy
+  { url = "*", is = "block", fg = "#F8F8F2" }, # tx
+  { url = "*", is = "char", fg = "#F8F8F2" }, # tx
+  { url = "*", is = "fifo", fg = "#DE5735" }, # ma
+  { url = "*", is = "sock", fg = "#DE5735" }, # ma
+  { url = "*", is = "sticky", fg = "#F8F8F2" }, # tx
+  { url = "*", is = "dummy", fg = "#6272A4" }, # tx-3
+
+  # Fallback
+  { url = "*/", fg = "#F8F8F2" }, # tx
+  { url = "*", is = "exec", fg = "#BD93F9" }, # gr
+  { url = "*", fg = "#6272A4" } # tx-2
+]
+
+[icon]
+dirs = [
+  { name = ".config", text = "", fg = "#BD93F9" }, # cy
+  { name = ".git", text = "", fg = "#BD93F9" }, # cy
+  { name = ".github", text = "", fg = "#BD93F9" }, # cy
+  { name = ".npm", text = "", fg = "#BD93F9" }, # cy
+  { name = "Desktop", text = "", fg = "#BD93F9" }, # cy
+  { name = "Development", text = "", fg = "#BD93F9" }, # cy
+  { name = "Documents", text = "", fg = "#BD93F9" }, # cy
+  { name = "Downloads", text = "", fg = "#BD93F9" }, # cy
+  { name = "Library", text = "", fg = "#BD93F9" }, # cy
+  { name = "Movies", text = "", fg = "#BD93F9" }, # cy
+  { name = "Music", text = "", fg = "#BD93F9" }, # cy
+  { name = "Pictures", text = "", fg = "#BD93F9" }, # cy
+  { name = "Public", text = "", fg = "#BD93F9" }, # cy
+  { name = "Videos", text = "", fg = "#BD93F9" } # cy
+]
+conds = [
+  # Special files
+  { if = "orphan", text = "", fg = "#6272A4" }, # tx-3
+  { if = "link", text = "", fg = "#BD93F9" }, # cy
+  { if = "block", text = "", fg = "#F8F8F2" }, # tx
+  { if = "char", text = "", fg = "#F8F8F2" }, # tx
+  { if = "fifo", text = "", fg = "#DE5735" }, # ma
+  { if = "sock", text = "", fg = "#DE5735" }, # ma
+  { if = "sticky", text = "", fg = "#F8F8F2" }, # tx
+  { if = "dummy", text = "", fg = "#6272A4" }, # tx-3
+
+  # Fallback
+  { if = "dir", text = "", fg = "#BD93F9" }, # cy
+  { if = "exec", text = "", fg = "#BD93F9" }, # gr
+  { if = "!dir", text = "", fg = "#6272A4" } # tx-2
+]
