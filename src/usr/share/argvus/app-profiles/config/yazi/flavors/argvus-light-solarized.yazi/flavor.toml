@@ -1,0 +1,32 @@
+# ARGVUS Solarized Light
+[app]
+overall = { bg = "#FDF6E3" }
+[mgr]
+cwd = { fg = "#657B83", bold = true }
+find_keyword = { fg = "#268BD2", reversed = true }
+marker_copied = { fg = "#859900", bg = "#859900" }
+marker_cut = { fg = "#DC322F", bg = "#DC322F" }
+marker_marked = { fg = "#2AA198", bg = "#2AA198" }
+marker_selected = { fg = "#268BD2", bg = "#268BD2" }
+border_style = { fg = "#D8D2BE" }
+[indicator]
+current = { fg = "#657B83", bg = "#EEE8D5" }
+[tabs]
+active = { fg = "#657B83", bg = "#EEE8D5", bold = true }
+inactive = { fg = "#839496", bg = "#F7F0DD" }
+[status]
+overall = { fg = "#657B83" }
+[which]
+mask = { bg = "#EEE8D5" }
+cand = { fg = "#268BD2", bold = true }
+desc = { fg = "#839496" }
+[confirm]
+border = { fg = "#D8D2BE" }
+title = { fg = "#586E75", bold = true }
+body = { fg = "#657B83", bold = true }
+btn_yes = { fg = "#FDF6E3", bg = "#268BD2", bold = true }
+btn_no = { fg = "#657B83", bg = "#EEE8D5" }
+[help]
+on = { fg = "#268BD2" }
+desc = { fg = "#839496", italic = true }
+footer = { fg = "#FDF6E3", bg = "#268BD2", bold = true }

@@ -1,0 +1,18 @@
+# ARGVUS Solarized Light Float
+[app]
+overall = { bg = "#FDF6E3" }
+[mgr]
+cwd = { fg = "#657B83", bold = true }
+find_keyword = { fg = "#268BD2", reversed = true }
+marker_copied = { fg = "#859900", bg = "#859900" }
+marker_cut = { fg = "#DC322F", bg = "#DC322F" }
+marker_marked = { fg = "#2AA198", bg = "#2AA198" }
+marker_selected = { fg = "#268BD2", bg = "#268BD2" }
+border_style = { fg = "#D8D2BE" }
+[indicator]
+current = { fg = "#657B83", bg = "#EEE8D5" }
+[tabs]
+active = { fg = "#657B83", bg = "#EEE8D5", bold = true }
+inactive = { fg = "#839496", bg = "#F7F0DD" }
+[status]
+overall = { fg = "#657B83" }
