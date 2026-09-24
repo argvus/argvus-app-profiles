@@ -1,0 +1,30 @@
+# theme: argvus-dark-monokai
+[app]
+overall = { bg = "#2D2A2E" }
+[mgr]
+cwd = { fg = "#FCFCFA", bold = true }
+find_keyword = { fg = "#78DCE8", reversed = true }
+find_position = { fg = "#78DCE8", bold = true }
+marker_copied = { fg = "#19181A", bg = "#A9DC76" }
+marker_cut = { fg = "#FCFCFA", bg = "#FF6188" }
+marker_marked = { fg = "#19181A", bg = "#78DCE8" }
+marker_selected = { fg = "#19181A", bg = "#78DCE8" }
+border_style = { fg = "#5B595C" }
+[indicator]
+current = { fg = "#FCFCFA", bg = "#403E41" }
+[tabs]
+active = { fg = "#FCFCFA", bg = "#403E41", bold = true }
+inactive = { fg = "#C1C0C0", bg = "#221F22" }
+[mode]
+normal_main = { fg = "#FCFCFA", bg = "#403E41", bold = true }
+normal_alt = { fg = "#C1C0C0", bg = "#221F22" }
+select_main = { fg = "#19181A", bg = "#78DCE8", bold = true }
+select_alt = { fg = "#78DCE8", bg = "#19181A" }
+unset_main = { fg = "#19181A", bg = "#78DCE8", bold = true }
+unset_alt = { fg = "#78DCE8", bg = "#19181A" }
+[status]
+overall = { fg = "#FCFCFA" }
+[notify]
+title_info = { fg = "#78DCE8" }
+title_warn = { fg = "#FFD866" }
+title_error = { fg = "#FF6188" }

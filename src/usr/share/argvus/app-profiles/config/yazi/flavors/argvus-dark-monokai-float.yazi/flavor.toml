@@ -1,0 +1,12 @@
+# theme: argvus-dark-monokai-float
+[app]
+overall = { bg = "#2D2A2E" }
+[mgr]
+cwd = { fg = "#FCFCFA", bold = true }
+[mode]
+normal_main = { fg = "#FCFCFA", bg = "#403E41", bold = true }
+select_main = { fg = "#19181A", bg = "#78DCE8", bold = true }
+[notify]
+title_info = { fg = "#78DCE8" }
+title_warn = { fg = "#FFD866" }
+title_error = { fg = "#FF6188" }
