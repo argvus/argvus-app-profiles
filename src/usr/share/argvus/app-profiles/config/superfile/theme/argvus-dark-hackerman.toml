@@ -1,0 +1,47 @@
+# theme: argvus-dark-hackerman
+
+code_syntax_highlight = "catppuccin-macchiato"
+
+full_screen_fg = "#DDF7FF"
+full_screen_bg = "#0B0C16"
+gradient_color = ["#82FB9C", "#788B92"]
+
+file_panel_fg = "#DDF7FF"
+file_panel_bg = "#0B0C16"
+file_panel_border = "#29303A"
+file_panel_border_active = "#82FB9C"
+file_panel_top_directory_icon = "#82FB9C"
+file_panel_top_path = "#DDF7FF"
+file_panel_item_selected_fg = "#DDF7FF"
+file_panel_item_selected_bg = "#141722"
+
+footer_fg = "#DDF7FF"
+footer_bg = "#0B0C16"
+footer_border = "#29303A"
+footer_border_active = "#82FB9C"
+
+sidebar_fg = "#DDF7FF"
+sidebar_bg = "#0B0C16"
+sidebar_title = "#82FB9C"
+sidebar_border = "#29303A"
+sidebar_border_active = "#82FB9C"
+sidebar_item_selected_fg = "#DDF7FF"
+sidebar_item_selected_bg = "#141722"
+sidebar_divider = "#29303A"
+
+modal_fg = "#DDF7FF"
+modal_bg = "#0B0C16"
+modal_border_active = "#82FB9C"
+modal_cancel_fg = "#0B0C16"
+modal_cancel_bg = "#788B92"
+modal_confirm_fg = "#0B0C16"
+modal_confirm_bg = "#82FB9C"
+
+help_menu_hotkey = "#82FB9C"
+help_menu_title = "#DDF7FF"
+
+cursor = "#DDF7FF"
+correct = "#82FB9C"
+error = "#788B92"
+hint = "#82FB9C"
+cancel = "#788B92"
