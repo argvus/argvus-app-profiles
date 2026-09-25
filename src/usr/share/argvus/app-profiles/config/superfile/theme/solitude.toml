@@ -1,0 +1,47 @@
+# theme: solitude
+
+code_syntax_highlight = "catppuccin-macchiato"
+
+full_screen_fg = "#CACCCC"
+full_screen_bg = "#101315"
+gradient_color = ["#798186", "#798186"]
+
+file_panel_fg = "#CACCCC"
+file_panel_bg = "#101315"
+file_panel_border = "#343D41"
+file_panel_border_active = "#798186"
+file_panel_top_directory_icon = "#798186"
+file_panel_top_path = "#CACCCC"
+file_panel_item_selected_fg = "#CACCCC"
+file_panel_item_selected_bg = "#1A1E20"
+
+footer_fg = "#CACCCC"
+footer_bg = "#101315"
+footer_border = "#343D41"
+footer_border_active = "#798186"
+
+sidebar_fg = "#CACCCC"
+sidebar_bg = "#101315"
+sidebar_title = "#798186"
+sidebar_border = "#343D41"
+sidebar_border_active = "#798186"
+sidebar_item_selected_fg = "#CACCCC"
+sidebar_item_selected_bg = "#1A1E20"
+sidebar_divider = "#343D41"
+
+modal_fg = "#CACCCC"
+modal_bg = "#101315"
+modal_border_active = "#798186"
+modal_cancel_fg = "#101315"
+modal_cancel_bg = "#798186"
+modal_confirm_fg = "#101315"
+modal_confirm_bg = "#798186"
+
+help_menu_hotkey = "#798186"
+help_menu_title = "#CACCCC"
+
+cursor = "#CACCCC"
+correct = "#798186"
+error = "#798186"
+hint = "#798186"
+cancel = "#798186"
