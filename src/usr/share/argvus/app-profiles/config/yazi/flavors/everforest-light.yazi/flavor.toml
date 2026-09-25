@@ -1,0 +1,32 @@
+# ARGVUS Everforest Light
+[app]
+overall = { bg = "#FDF6E3" }
+[mgr]
+cwd = { fg = "#5C6A72", bold = true }
+find_keyword = { fg = "#3A94C5", reversed = true }
+marker_copied = { fg = "#8DA101", bg = "#8DA101" }
+marker_cut = { fg = "#F85552", bg = "#F85552" }
+marker_marked = { fg = "#35A77C", bg = "#35A77C" }
+marker_selected = { fg = "#3A94C5", bg = "#3A94C5" }
+border_style = { fg = "#BDC3AF" }
+[indicator]
+current = { fg = "#5C6A72", bg = "#E6E2CC" }
+[tabs]
+active = { fg = "#5C6A72", bg = "#E6E2CC", bold = true }
+inactive = { fg = "#829181", bg = "#F7F0DD" }
+[status]
+overall = { fg = "#5C6A72" }
+[which]
+mask = { bg = "#E6E2CC" }
+cand = { fg = "#3A94C5", bold = true }
+desc = { fg = "#829181" }
+[confirm]
+border = { fg = "#BDC3AF" }
+title = { fg = "#586E75", bold = true }
+body = { fg = "#5C6A72", bold = true }
+btn_yes = { fg = "#FDF6E3", bg = "#3A94C5", bold = true }
+btn_no = { fg = "#5C6A72", bg = "#E6E2CC" }
+[help]
+on = { fg = "#3A94C5" }
+desc = { fg = "#829181", italic = true }
+footer = { fg = "#FDF6E3", bg = "#3A94C5", bold = true }
