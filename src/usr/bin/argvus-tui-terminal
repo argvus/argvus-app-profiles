@@ -12,9 +12,14 @@ ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}
 _class="argvus-tui"
 _term_override=""
 _terminal_profile="default"
+_materialize_kitty=0
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
+    --materialize-kitty)
+      _materialize_kitty=1
+      shift
+      ;;
     --class)
       [ "$#" -ge 2 ] || {
         printf '%s\n' "$(argvus_tr app-profiles launcher.class_requires_value)" >&2
@@ -108,35 +113,65 @@ font_size() {
   esac
 }
 
-runtime_foot_config() {
-  _src="$(paths_config "app-profiles/config/foot-tui/foot.ini")"
-  _dst="$(paths_cache "foot-tui/foot.ini")"
-  _family="$(font_family)"
-  _size="$(font_size)"
-  mkdir -p "${_dst%/*}"
-  awk -v family="$_family" -v size="$_size" '
-    /^[[:space:]]*font=/ { print "font=" family ":size=" size ", Noto Color Emoji:size=12"; next }
-    { print }
-  ' "$_src" > "$_dst"
-  printf '%s\n' "$_dst"
+# Computes the Kitty background_opacity for the ARGVUS Control Center profile.
+# Transparency only takes effect when both the transparency and blur effects are
+# enabled; disabling either restores a fully opaque window.
+control_center_background_opacity() {
+  _transparency_enabled="true"
+  _transparency_value="50"
+  _blur_enabled="true"
+  if command -v argvus-config >/dev/null 2>&1; then
+    _transparency_enabled="$(argvus-config get /effects/transparency_control-center_enabled --effective --raw 2>/dev/null || true)"
+    _transparency_value="$(argvus-config get /effects/transparency_control-center_value --effective --raw 2>/dev/null || true)"
+    _blur_enabled="$(argvus-config get /effects/blur_control-center_enabled --effective --raw 2>/dev/null || true)"
+  fi
+  case "$_transparency_enabled" in
+    true) _transparency_on=1 ;;
+    *) _transparency_on=0 ;;
+  esac
+  case "$_blur_enabled" in
+    true) _blur_on=1 ;;
+    *) _blur_on=0 ;;
+  esac
+  if [ "$_transparency_on" -eq 1 ] && [ "$_blur_on" -eq 1 ]; then
+    case "$_transparency_value" in
+      ''|*[!0-9]*) _transparency_value=50 ;;
+    esac
+    [ "$_transparency_value" -le 100 ] || _transparency_value=50
+    awk -v value="$_transparency_value" 'BEGIN { printf "%.2f\n", 1 - (value / 100) }'
+  else
+    printf '1.00\n'
+  fi
 }
 
 runtime_kitty_config() {
-  if [ "$_terminal_profile" = "greeter" ] && command -v argvus-terminal >/dev/null 2>&1; then
-    # Materialize the active theme and user font settings before applying
-    # the Greeter-only Kitty policy below.
-    _src="$(argvus-terminal --print-tui-config)"
-  else
-    _src="$(paths_cache "argvus-terminal/kitty-tui-apps.conf")"
-    [ -f "$_src" ] || _src="$(paths_config "terminal/config/kitty-tui/kitty.conf")"
-  fi
-  if [ "$_terminal_profile" = "greeter" ]; then
-    _dst="$(paths_cache "kitty-tui/kitty-greeter.conf")"
-  elif [ "$_file_manager_profile" -eq 1 ]; then
-    _dst="$(paths_cache "kitty-tui/kitty-file-manager.conf")"
-  else
-    _dst="$(paths_cache "kitty-tui/kitty-${_font_profile}.conf")"
-  fi
+  case "$_terminal_profile" in
+    greeter|control-center)
+      if command -v argvus-terminal >/dev/null 2>&1; then
+        # Materialize the active theme and user font settings before applying
+        # the policy below (Greeter or Control Center windows).
+        _src="$(argvus-terminal --print-tui-config)"
+      else
+        _src="$(paths_cache "argvus-terminal/kitty-tui-apps.conf")"
+        [ -f "$_src" ] || _src="$(paths_config "terminal/config/kitty-tui/kitty.conf")"
+      fi
+      ;;
+    *)
+      _src="$(paths_cache "argvus-terminal/kitty-tui-apps.conf")"
+      [ -f "$_src" ] || _src="$(paths_config "terminal/config/kitty-tui/kitty.conf")"
+      ;;
+  esac
+  case "$_terminal_profile" in
+    greeter) _dst="$(paths_cache "kitty-tui/kitty-greeter.conf")" ;;
+    control-center) _dst="$(paths_cache "kitty-tui/kitty-control-center.conf")" ;;
+    *)
+      if [ "$_file_manager_profile" -eq 1 ]; then
+        _dst="$(paths_cache "kitty-tui/kitty-file-manager.conf")"
+      else
+        _dst="$(paths_cache "kitty-tui/kitty-${_font_profile}.conf")"
+      fi
+      ;;
+  esac
   _family="$(font_family)"
   _size="$(font_size)"
   mkdir -p "${_dst%/*}"
@@ -145,8 +180,9 @@ runtime_kitty_config() {
     /^[[:space:]]*font_size[[:space:]]+/ { print "font_size        " size; next }
     { print }
   ' "$_src" > "$_dst"
-  if [ "$_terminal_profile" = "greeter" ]; then
-    cat >> "$_dst" <<'EOF'
+  case "$_terminal_profile" in
+    greeter)
+      cat >> "$_dst" <<'EOF'
 
 # ARGVUS Greeter policy: this is a runtime-only override. The regular Kitty
 # configuration and all user terminal sessions keep their tab behavior.
@@ -162,11 +198,27 @@ map alt+5 no_op
 map ctrl+tab no_op
 map ctrl+shift+tab no_op
 EOF
-  fi
+      ;;
+    control-center)
+      # ARGVUS Control Center policy: tab-less window with the transparency
+      # requested for the Control Center TUI. The opacity is appended after the
+      # base configuration so it always wins.
+      _opacity="$(control_center_background_opacity)"
+      printf '\n# ARGVUS Control Center policy: this is a runtime-only override. The\n# regular Kitty configuration and all user terminal sessions keep their tab\n# behavior and transparency.\nbackground_opacity %s\ntab_bar_style hidden\nmap ctrl+alt+n no_op\nmap ctrl+shift+t no_op\nmap ctrl+q no_op\nmap alt+1 no_op\nmap alt+2 no_op\nmap alt+3 no_op\nmap alt+4 no_op\nmap alt+5 no_op\nmap ctrl+tab no_op\nmap ctrl+shift+tab no_op\n' "$_opacity" >> "$_dst"
+      ;;
+  esac
   printf '%s\n' "$_dst"
 }
 
-_backend="${_term_override:-${TERM##*/}}"
+# Regenerate the Kitty profile for the requested window without launching any
+# terminal. This gives the session scripts a hook to rematerialize the Control
+# Center backing store after effect changes.
+if [ "$_materialize_kitty" -eq 1 ]; then
+  runtime_kitty_config >/dev/null
+  exit 0
+fi
+
+_backend="${_term_override:-kitty}"
 case "$_backend" in
   argvus-terminal)
     exec argvus-terminal \
@@ -180,12 +232,6 @@ case "$_backend" in
     exec kitty \
       --class "$_class" \
       --config "$_kitty_config" \
-      -e "$@"
-    ;;
-  foot|footclient)
-    exec "$_backend" \
-      --app-id "$_class" \
-      -c "$(runtime_foot_config)" \
       -e "$@"
     ;;
   alacritty)
