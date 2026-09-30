@@ -85,7 +85,7 @@ done
 font_state_value() {
   _key="$1"
   _fallback="$2"
-  _fonts_file="${ARGVUS_CONFIG_HOME}/argvus/fonts.conf"
+  _fonts_file="${ARGVUS_CONFIG_HOME}/argvus/data/generated/fonts.conf"
   if [ -f "$_fonts_file" ]; then
     _value="$(sed -n "s|^${_key}=||p" "$_fonts_file" | head -n1)"
     [ -n "$_value" ] && { printf '%s\n' "$_value"; return 0; }
