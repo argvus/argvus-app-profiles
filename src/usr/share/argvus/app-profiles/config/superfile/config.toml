@@ -12,8 +12,8 @@
 ###############################################################################
 
 #-- File Editor
-# Default: $EDITOR
-editor = "vim"
+# Empty uses $EDITOR, which ARGVUS sets from the default terminal editor.
+editor = ""
 
 #-- Directory Editor
 #
