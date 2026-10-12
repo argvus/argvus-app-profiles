@@ -15,8 +15,8 @@ _destination="${2:-}"
 # shellcheck disable=SC1091
 . /usr/share/argvus/lib/i18n.sh
 
-command -v argvus-i18n >/dev/null 2>&1 || {
-    printf '%s\n' 'argvus-app-profiles-yazi-keymap: argvus-i18n is required' >&2
+command -v argvus >/dev/null 2>&1 || {
+    printf '%s\n' 'argvus-app-profiles-yazi-keymap: argvus i18n is required' >&2
     exit 1
 }
 

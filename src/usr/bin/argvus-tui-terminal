@@ -120,10 +120,10 @@ control_center_background_opacity() {
   _transparency_enabled="true"
   _transparency_value="50"
   _blur_enabled="true"
-  if command -v argvus-config >/dev/null 2>&1; then
-    _transparency_enabled="$(argvus-config get /effects/transparency_control-center_enabled --effective --raw 2>/dev/null || true)"
-    _transparency_value="$(argvus-config get /effects/transparency_control-center_value --effective --raw 2>/dev/null || true)"
-    _blur_enabled="$(argvus-config get /effects/blur_control-center_enabled --effective --raw 2>/dev/null || true)"
+  if command -v argvus >/dev/null 2>&1; then
+    _transparency_enabled="$(argvus config get /effects/transparency_control-center_enabled --effective --raw 2>/dev/null || true)"
+    _transparency_value="$(argvus config get /effects/transparency_control-center_value --effective --raw 2>/dev/null || true)"
+    _blur_enabled="$(argvus config get /effects/blur_control-center_enabled --effective --raw 2>/dev/null || true)"
   fi
   case "$_transparency_enabled" in
     true) _transparency_on=1 ;;
@@ -147,10 +147,10 @@ control_center_background_opacity() {
 runtime_kitty_config() {
   case "$_terminal_profile" in
     greeter|control-center)
-      if command -v argvus-terminal >/dev/null 2>&1; then
+      if command -v argvus >/dev/null 2>&1; then
         # Materialize the active theme and user font settings before applying
         # the policy below (Greeter or Control Center windows).
-        _src="$(argvus-terminal --print-tui-config)"
+        _src="$(argvus terminal --print-tui-config)"
       else
         _src="$(paths_cache "argvus-terminal/kitty-tui-apps.conf")"
         [ -f "$_src" ] || _src="$(paths_config "terminal/config/kitty-tui/kitty.conf")"
@@ -221,7 +221,7 @@ fi
 _backend="${_term_override:-kitty}"
 case "$_backend" in
   argvus-terminal)
-    exec argvus-terminal \
+    exec argvus terminal \
       --class "$_class" \
       --font-profile "$_font_profile" \
       --tui \

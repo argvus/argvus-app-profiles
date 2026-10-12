@@ -28,7 +28,7 @@ if [ -d "$target" ]; then
     # profile remains the canonical en-US configuration when used directly.
     _yazi_keymap="$(mktemp "${TMPDIR:-/tmp}/argvus-yazi-keymap.XXXXXX")"
     trap 'rm -f "$_yazi_keymap"' EXIT HUP INT TERM
-    argvus-app-profiles-yazi-keymap \
+    argvus app-profiles-yazi-keymap \
         "$(paths_config "app-profiles/config/yazi/keymap.toml")" \
         "$_yazi_keymap"
 
@@ -40,12 +40,12 @@ if [ -d "$target" ]; then
 
     case "$YAZI" in
         "argvus --spf")
-            YAZI_CONFIG_HOME="$_yazi_config" argvus-tui-terminal \
+            YAZI_CONFIG_HOME="$_yazi_config" argvus tui-terminal \
                 --class argvus-file-manager --term kitty -- \
                 argvus --spf "$target" >/dev/null 2>&1 &
             ;;
         "argvus --yazy"|"argvus --yazi")
-            YAZI_CONFIG_HOME="$_yazi_config" argvus-tui-terminal \
+            YAZI_CONFIG_HOME="$_yazi_config" argvus tui-terminal \
                 --class argvus-file-manager --term kitty -- \
                 argvus --yazy "$target" >/dev/null 2>&1 &
             ;;
