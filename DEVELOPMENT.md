@@ -6,6 +6,9 @@ package (part of the [ARGVUS](https://gitlab.com/argvus/) organization).
 ## Project layout
 
 ```text
+crates/
+  core/        profile, font, opacity and Kitty configuration rules
+  main/        the argvus-tui-terminal command line and the launch
 packaging/
   arch/
     ci/        PKGBUILD used by GitHub Actions (release built from a tag)
@@ -14,9 +17,6 @@ src/           package payload (usr/ tree that is installed into /usr/)
 tools/
   sh/
     pkgbuild_local.sh   creates the local archive and runs makepkg
-    validate.sh         required repository and metadata checks
-packaging/arch/common/
-  functions.sh          shared source-tree normalization for both PKGBUILDs
 build/         build outputs (git-ignored)
   artifacts/   source .tar.gz + src/ + pkg/ (kept for inspection)
   dist/        final .pkg.tar.zst (ready to install / publish)
@@ -77,7 +77,7 @@ make clean
 ## Validation
 
 ```sh
-make validate   # shellcheck, PKGBUILD parsing, and whitespace checks
+make validate   # shellcheck, cargo metadata, and PKGBUILD parsing
 make lint       # local static checks
 make spellcheck # optional local cspell check
 ```
