@@ -23,22 +23,56 @@ jobs:
 
       - name: Install validation tools
         run: |
-          pacman -Syu --noconfirm --needed base-devel git namcap pacman-contrib shellcheck sudo
+          pacman -Syu --noconfirm --needed base-devel cargo git namcap pacman-contrib shellcheck sudo
+
+      - name: Prepare unprivileged build user
+        run: |
+          useradd --create-home --shell /bin/bash builder
+          printf 'builder ALL=(ALL) NOPASSWD: ALL\n' >/etc/sudoers.d/builder
+          chown -R builder:builder "$GITHUB_WORKSPACE"
 
       - name: Validate repository
         shell: bash
         run: |
           set -euo pipefail
-          make validate
+          sudo -u builder make check
+          sudo -u builder make validate
 
       - name: Build local package
         shell: bash
         run: |
           set -euo pipefail
-          useradd --create-home --shell /bin/bash builder
-          printf 'builder ALL=(ALL) NOPASSWD: ALL\n' >/etc/sudoers.d/builder
-          chown -R builder:builder "$GITHUB_WORKSPACE"
-          sudo -u builder env HOME=/home/builder make build
+          sudo -u builder make package
+
+      - name: Lint CI PKGBUILD with namcap
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(namcap packaging/arch/ci/PKGBUILD 2>&1)" || status=$?
+          status="${status:-0}"
+          printf '%s\n' "$output"
+          unexpected="$(printf '%s\n' "$output" | grep -v 'E: Missing checksums' || true)"
+          if [[ "$status" -ne 0 && "$unexpected" == *' E: '* ]]; then
+            exit "$status"
+          fi
+
+      - name: Lint local PKGBUILD with namcap
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(namcap packaging/arch/local/PKGBUILD 2>&1)" || status=$?
+          status="${status:-0}"
+          printf '%s\n' "$output"
+          unexpected="$(printf '%s\n' "$output" | grep -v 'E: Missing checksums' || true)"
+          if [[ "$status" -ne 0 && "$unexpected" == *' E: '* ]]; then
+            exit "$status"
+          fi
+
+      - name: Lint built package with namcap
+        shell: bash
+        run: |
+          set -euo pipefail
+          namcap build/dist/*.pkg.tar.zst
 
   spellcheck:
     name: Spellcheck

@@ -29,8 +29,8 @@ footer = """
 [git]
 conventional_commits = true
 filter_unconventional = false
+ignore_commits = "^chore"
 commit_parsers = [
-  { message = "^chore", skip = true },
   { message = "^feat", group = "Features" },
   { message = "^fix", group = "Bug Fixes" },
   { message = "^docs", group = "Documentation" },
