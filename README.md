@@ -2,11 +2,11 @@
 
 Application profiles and ARGVUS launcher wrappers for terminal and TUI tools.
 The package owns the configuration, themes, and shell helpers for bottom, btop,
-foot, foot-tui, kitty, kitty-tui, snappy-switcher, superfile, term, and yazi.
+foot, foot-tui, kitty, kitty-tui, superfile, term, and yazi.
 
-The `argvus-tui-terminal` launcher is written in Rust (`crates/`). It installs the
-dedicated `/usr/lib/argvus/commands/argvus-tui-terminal` launcher and the
-`/usr/lib/argvus/commands/argvus-app-profiles-yazi-keymap` helper, plus the shared profiles
+The `argvus tui-terminal` launcher is part of the `argvus` workspace (`crates/argvus-tui-terminal` in `de/argvus`). It installs the
+dedicated `argvus tui-terminal` launcher and the
+`argvus app-profiles-yazi-keymap` helper, plus the shared profiles
 under `/usr/share/argvus/app-profiles`.
 
 `argvus tui-terminal --profile greeter` creates a Kitty runtime profile for

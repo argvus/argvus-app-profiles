@@ -6,9 +6,7 @@ package (part of the [ARGVUS](https://gitlab.com/argvus/) organization).
 ## Project layout
 
 ```text
-crates/
-  core/        profile, font, opacity and Kitty configuration rules
-  main/        the argvus-tui-terminal command line and the launch
+# the tui-terminal launcher and its rules live in the argvus workspace (crates/argvus-tui-terminal*)
 packaging/
   arch/
     ci/        PKGBUILD used by GitHub Actions (release built from a tag)
