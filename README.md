@@ -1,8 +1,9 @@
 # argvus-app-profiles
 
 Application profiles and ARGVUS launcher wrappers for terminal and TUI tools.
-The package owns the configuration, themes, and shell helpers for bottom, btop,
-foot, foot-tui, kitty, kitty-tui, superfile, term, and yazi.
+The package owns the profiles of the terminal and TUI tools it ships: superfile and yazi
+(configuration, themes and the keymap helper). The Kitty and btop configuration is part of
+the `argvus` package and of the terminal and system monitor components.
 
 The `argvus tui-terminal` launcher is part of the `argvus` workspace (`crates/argvus-tui-terminal` in `de/argvus`). It installs the
 dedicated `argvus tui-terminal` launcher and the
