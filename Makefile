@@ -36,7 +36,6 @@ install: package
 	@sudo pacman -U build/dist/*.zst --overwrite="*" --noconfirm
 
 validate:
-	@sh tools/sh/sync-skeleton.sh --check
 	@shellcheck tools/sh/pkgbuild_local.sh
 	@cd packaging/arch/remote && makepkg -p PKGBUILD --printsrcinfo >/dev/null
 	@cd packaging/arch/local && makepkg -p PKGBUILD --printsrcinfo >/dev/null

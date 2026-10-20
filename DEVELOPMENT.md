@@ -9,7 +9,7 @@ package (part of the [ARGVUS](https://gitlab.com/argvus/) organization).
 # the tui-terminal launcher and its rules live in the argvus workspace (crates/argvus-tui-terminal*)
 packaging/
   arch/
-    ci/        PKGBUILD used by GitHub Actions (release built from a tag)
+    remote/       PKGBUILD used by GitHub Actions (release built from a tag)
     local/     PKGBUILD used for local builds (from the working tree)
 src/           package payload (usr/ tree that is installed into /usr/)
 tools/
