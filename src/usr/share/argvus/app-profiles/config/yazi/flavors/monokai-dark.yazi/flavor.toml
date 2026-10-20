@@ -1,4 +1,26 @@
 # theme: monokai-dark
+# Argvus palette: Monokai Dark (derived from the theme's Theme.qml and kitty colors)
+# ---
+# bg          "#2D2A2E"
+# bg-2        "#353237"
+# bl          "#78DCE8"
+# cy          "#78DCE8"
+# cy-2        "#403E41"
+# cy-700      "#5B595C"
+# cy-900      "#2D2A2E"
+# gr          "#A9DC76"
+# ma          "#AB9DF2"
+# or          "#FFD866"
+# pu          "#AB9DF2"
+# re          "#FF6188"
+# tx          "#FCFCFA"
+# tx-2        "#C1C0C0"
+# tx-3        "#939293"
+# ui          "#2D2A2E"
+# ui-2        "#5B595C"
+# ui-3        "#5B595C"
+# ye          "#FFD866"
+# ye-2        "#FFD866"
 [app]
 overall = { bg = "#2D2A2E" }
 [mgr]
@@ -10,11 +32,20 @@ marker_cut = { fg = "#FCFCFA", bg = "#FF6188" }
 marker_marked = { fg = "#19181A", bg = "#78DCE8" }
 marker_selected = { fg = "#19181A", bg = "#78DCE8" }
 border_style = { fg = "#5B595C" }
+count_copied = { fg = "#A9DC76", bold = true, reversed = true } # gr
+count_cut = { fg = "#FF6188", bold = true, reversed = true } # re
+count_selected = { fg = "#78DCE8", bold = true, reversed = true } # cy
+border_symbol = "│"
 [indicator]
 current = { fg = "#FCFCFA", bg = "#403E41" }
+parent = { underline = true }
+preview = { underline = true }
+padding = { open = "█", close = "█" }
 [tabs]
 active = { fg = "#FCFCFA", bg = "#403E41", bold = true }
 inactive = { fg = "#C1C0C0", bg = "#221F22" }
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
 [mode]
 normal_main = { fg = "#FCFCFA", bg = "#403E41", bold = true }
 normal_alt = { fg = "#C1C0C0", bg = "#221F22" }
@@ -24,7 +55,123 @@ unset_main = { fg = "#19181A", bg = "#78DCE8", bold = true }
 unset_alt = { fg = "#78DCE8", bg = "#19181A" }
 [status]
 overall = { fg = "#FCFCFA" }
+perm_type = { fg = "#78DCE8" } # bl
+perm_read = { fg = "#FFD866" } # ye
+perm_write = { fg = "#FF6188" } # re
+perm_exec = { fg = "#A9DC76" } # gr
+perm_sep = { fg = "#C1C0C0" } # tx-2
+progress_label = { fg = "#2D2A2E" } # bg
+progress_normal = { fg = "#78DCE8", bg = "#5B595C" } # cy, cy-700
+progress_error = { bg = "#FF6188" } # re
 [notify]
 title_info = { fg = "#78DCE8" }
 title_warn = { fg = "#FFD866" }
 title_error = { fg = "#FF6188" }
+
+[which]
+cols = 3
+mask = { bg = "#353237" } # bg-2
+cand = { fg = "#78DCE8", bold = true } # cy
+rest = { fg = "#78DCE8", italic = true } # cy
+desc = { fg = "#939293" } # tx-3
+separator = " "
+separator_style = { }
+
+[confirm]
+border = { fg = "#5B595C" } # ui-3
+title = { fg = "#939293", bold = true } # tx-3
+body = { fg = "#FCFCFA", bold = true } # tx
+list = { fg = "#FCFCFA" } # tx
+btn_yes = { fg = "#FCFCFA", bg = "#5B595C", bold = true } # tx, ui-3
+btn_no = { fg = "#C1C0C0", bg = "#2D2A2E" } # tx-2, ui
+
+[spot]
+border = { fg = "#5B595C" } # ui-3
+title = { fg = "#939293", bold = true } # tx-3
+tbl_col = { fg = "#C1C0C0" } # tx-2
+tbl_cell = { fg = "#FCFCFA", bg = "#2D2A2E" } # tx, ui
+
+[pick]
+border = { fg = "#5B595C", bold = true } # ui-3
+active = { fg = "#FCFCFA" } # tx
+inactive = { fg = "#C1C0C0" } # tx-2
+
+[input]
+border = { fg = "#5B595C" } # ui-3
+title = { fg = "#939293", bold = true } # tx-3
+value = { fg = "#FCFCFA" } # tx
+selected = { bg = "#353237" } # bg-2
+
+[cmp]
+border = { fg = "#5B595C", bold = true } # ui-3
+active = { fg = "#FCFCFA", bg = "#2D2A2E" } # tx, ui
+inactive = { fg = "#C1C0C0" } # tx-2
+
+[tasks]
+border = { fg = "#5B595C" } # ui-3
+title = { fg = "#939293", bold = true } # tx-3
+hovered = { fg = "#FCFCFA", bg = "#2D2A2E" } # tx, ui
+
+[help]
+on = { fg = "#78DCE8" } # bl
+run = { fg = "#78DCE8" } # cy
+desc = { fg = "#939293", italic = true } # tx-3
+hovered = { bg = "#2D2A2E" } # ui
+footer = { fg = "#2D2A2E", bg = "#78DCE8", bold = true } # bg, cy
+
+[filetype]
+rules = [
+  # Empty files
+  { mime = "inode/empty", fg = "#A98C72" }, # tx-3
+
+  # Special files
+  { url = "*", is = "orphan", fg = "#A98C72" }, # tx-3
+  { url = "*/", is = "orphan", fg = "#A98C72" }, # tx-3
+  { url = "*", is = "link", fg = "#E2BE8A" }, # cy
+  { url = "*/", is = "link", fg = "#E2BE8A" }, # cy
+  { url = "*", is = "block", fg = "#EADCCC" }, # tx
+  { url = "*", is = "char", fg = "#EADCCC" }, # tx
+  { url = "*", is = "fifo", fg = "#E25D6C" }, # ma
+  { url = "*", is = "sock", fg = "#E25D6C" }, # ma
+  { url = "*", is = "sticky", fg = "#EADCCC" }, # tx
+  { url = "*", is = "dummy", fg = "#A98C72" }, # tx-3
+
+  # Fallback
+  { url = "*/", fg = "#EADCCC" }, # tx
+  { url = "*", is = "exec", fg = "#E2BE8A" }, # gr
+  { url = "*", fg = "#C1C0C0" } # tx-2
+]
+
+[icon]
+dirs = [
+  { name = ".config", text = "", fg = "#E2BE8A" }, # cy
+  { name = ".git", text = "", fg = "#E2BE8A" }, # cy
+  { name = ".github", text = "", fg = "#E2BE8A" }, # cy
+  { name = ".npm", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Desktop", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Development", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Documents", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Downloads", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Library", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Movies", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Music", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Pictures", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Public", text = "", fg = "#E2BE8A" }, # cy
+  { name = "Videos", text = "", fg = "#78DCE8" } # cy
+]
+conds = [
+  # Special files
+  { if = "orphan", text = "", fg = "#A98C72" }, # tx-3
+  { if = "link", text = "", fg = "#E2BE8A" }, # cy
+  { if = "block", text = "", fg = "#EADCCC" }, # tx
+  { if = "char", text = "", fg = "#EADCCC" }, # tx
+  { if = "fifo", text = "", fg = "#E25D6C" }, # ma
+  { if = "sock", text = "", fg = "#E25D6C" }, # ma
+  { if = "sticky", text = "", fg = "#EADCCC" }, # tx
+  { if = "dummy", text = "", fg = "#A98C72" }, # tx-3
+
+  # Fallback
+  { if = "dir", text = "", fg = "#E2BE8A" }, # cy
+  { if = "exec", text = "", fg = "#E2BE8A" }, # gr
+  { if = "!dir", text = "", fg = "#C1C0C0" } # tx-2
+]

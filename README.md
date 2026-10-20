@@ -22,7 +22,7 @@ make build
 ```
 
 The repository follows the standard ARGVUS Arch packaging layout. See
-[packaging/arch/README.md](packaging/arch/README.md) for the CI and local
+[packaging/arch/README.md](packaging/arch/README.md) for the remote and local
 PKGBUILD contract.
 
 ## License

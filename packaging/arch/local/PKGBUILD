@@ -34,7 +34,7 @@ check() {
 package() {
   cd "$(_source_dir)"
 
-  install -Dm755 "src/usr/share/argvus/app-profiles/sh/yazi-keymap.sh" "${pkgdir}/usr/lib/argvus/commands/argvus-app-profiles-yazi-keymap"
+  install -Dm755 "src/usr/share/argvus/app-profiles/sh/yazi-keymap.sh" "${pkgdir}/usr/lib/argvus/commands/app-profiles-yazi-keymap"
   install -dm755 "${pkgdir}/usr/share/argvus/app-profiles"
   cp -R --no-preserve=ownership "src/usr/share/argvus/app-profiles/." "${pkgdir}/usr/share/argvus/app-profiles/"
   find "${pkgdir}/usr/share/argvus/app-profiles/sh" -type f -name '*.sh' -exec chmod 755 {} +

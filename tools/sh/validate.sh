@@ -15,11 +15,34 @@ bash -n "${shell_files[@]}"
 metadata() {
   bash -c 'source "$1"; printf "%s\n" "$pkgname" "$pkgver" "$pkgrel" "$pkgdesc"; printf "%s\n" "${arch[*]}" "${license[*]}" "${depends[*]}"; printf "%s\n" "${makedepends[*]}" "${options[*]}"' bash "$1"
 }
-ci_metadata="$(metadata packaging/arch/ci/PKGBUILD)"
+remote_metadata="$(metadata packaging/arch/remote/PKGBUILD)"
 local_metadata="$(metadata packaging/arch/local/PKGBUILD)"
-[[ "$ci_metadata" == "$local_metadata" ]] || die "CI and local PKGBUILD metadata is out of sync"
-for pkgbuild_dir in packaging/arch/ci packaging/arch/local; do
+[[ "$remote_metadata" == "$local_metadata" ]] || die "remote and local PKGBUILD metadata is out of sync"
+for pkgbuild_dir in packaging/arch/remote packaging/arch/local; do
   ( cd "$pkgbuild_dir"; makepkg -p PKGBUILD --printsrcinfo >/dev/null )
 done
+# Yazi flavors shipped by this repository: a flavor.toml that is not TOML, or a
+# tmtheme.xml that is not a plist, breaks theme switching, so fail here.
+flavors_dir="src/usr/share/argvus/app-profiles/config/yazi/flavors"
+if [[ -d "$flavors_dir" ]]; then
+  python3 -I -c '
+import pathlib, plistlib, sys, tomllib
+failed = False
+for flavor in sorted(pathlib.Path(sys.argv[1]).glob("*.yazi")):
+  try:
+    tomllib.loads((flavor / "flavor.toml").read_text(encoding="utf-8"))
+  except (OSError, tomllib.TOMLDecodeError) as error:
+    print(f"invalid flavor.toml: {flavor}: {error}", file=sys.stderr)
+    failed = True
+  tmtheme = flavor / "tmtheme.xml"
+  if tmtheme.exists():
+    try:
+      plistlib.loads(tmtheme.read_bytes())
+    except Exception as error:
+      print(f"invalid tmtheme.xml: {tmtheme}: {error}", file=sys.stderr)
+      failed = True
+sys.exit(1 if failed else 0)
+' "$flavors_dir" || die "invalid Yazi flavor files"
+fi
 git diff --check
 printf 'Validation OK\n'

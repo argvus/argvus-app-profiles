@@ -1,4 +1,4 @@
-.PHONY: help build package install clean validate lint-shell check changelog
+.PHONY: help build package install clean validate lint-shell check
 .DEFAULT_GOAL := help
 
 help:
@@ -10,7 +10,6 @@ help:
 	@echo "  make validate        - validate scripts, shared files and PKGBUILD metadata"
 	@echo "  make check           - run the shell lint"
 	@echo "  make lint-shell      - shellcheck and bash -n for the shell scripts"
-	@echo "  make changelog       - regenerate CHANGELOG.md with git-cliff"
 
 lint-shell:
 	@for root in tools packaging/arch/common src; do \
@@ -39,12 +38,9 @@ install: package
 validate:
 	@sh tools/sh/sync-skeleton.sh --check
 	@shellcheck tools/sh/pkgbuild_local.sh
-	@cd packaging/arch/ci && makepkg -p PKGBUILD --printsrcinfo >/dev/null
+	@cd packaging/arch/remote && makepkg -p PKGBUILD --printsrcinfo >/dev/null
 	@cd packaging/arch/local && makepkg -p PKGBUILD --printsrcinfo >/dev/null
 	@echo "Validation OK"
-
-changelog:
-	@git-cliff -o CHANGELOG.md
 
 clean:
 	@rm -rf build/

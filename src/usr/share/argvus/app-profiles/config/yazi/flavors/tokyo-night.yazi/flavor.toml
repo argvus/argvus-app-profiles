@@ -198,4 +198,4 @@ conds = [
   { if = "dir", text = "", fg = "#7AA2F7" }, # cy
   { if = "exec", text = "", fg = "#7AA2F7" }, # gr
   { if = "!dir", text = "", fg = "#A9B1D6" } # tx-2
-]+
+]

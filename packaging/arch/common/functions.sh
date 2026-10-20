@@ -26,7 +26,7 @@ arch_check_app_profiles_payload() {
 
 arch_package_app_profiles_payload() {
   local source_root="${srcdir}/${pkgname}-${pkgver}"
-  install -Dm755 "${source_root}/src/usr/share/argvus/app-profiles/sh/yazi-keymap.sh" "${pkgdir}/usr/lib/argvus/commands/argvus-app-profiles-yazi-keymap"
+  install -Dm755 "${source_root}/src/usr/share/argvus/app-profiles/sh/yazi-keymap.sh" "${pkgdir}/usr/lib/argvus/commands/app-profiles-yazi-keymap"
   install -dm755 "${pkgdir}/usr/share/argvus/app-profiles"
   cp -R --no-preserve=ownership "${source_root}/src/usr/share/argvus/app-profiles/." "${pkgdir}/usr/share/argvus/app-profiles/"
   find "${pkgdir}/usr/share/argvus/app-profiles/sh" -type f -name '*.sh' -exec chmod 755 {} +
