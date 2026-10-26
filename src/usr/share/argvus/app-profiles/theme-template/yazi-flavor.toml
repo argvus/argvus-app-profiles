@@ -1,0 +1,181 @@
+# Argvus palette
+# ---
+
+[app]
+overall = { bg = "{{ @yazi_overall_bg | hex }}" } # bg
+
+[mgr]
+cwd = { fg = "{{ @yazi_cwd_fg | hex }}", bold = true } # tx
+
+# Find
+find_keyword = { fg = "{{ @yazi_find_keyword_fg | hex }}", reversed = true } # cy
+find_position = { fg = "{{ @yazi_find_keyword_fg | hex }}", bold = true, italic = true } # cy
+
+# Marker
+marker_copied = { fg = "{{ @yazi_marker_copied_fg | hex }}", bg = "{{ @yazi_marker_copied_bg | hex }}" } # gr, gr
+marker_cut = { fg = "{{ @yazi_marker_cut_fg | hex }}", bg = "{{ @yazi_marker_cut_bg | hex }}" } # re, re
+marker_marked = { fg = "{{ @yazi_marker_marked_fg | hex }}", bg = "{{ @yazi_marker_marked_bg | hex }}" } # cy-700, cy-700
+marker_selected = { fg = "{{ @yazi_marker_selected_fg | hex }}", bg = "{{ @yazi_find_keyword_fg | hex }}" } # cy, cy
+
+# Count
+count_copied = { fg = "{{ @yazi_marker_copied_bg | hex }}", bold = true, reversed = true } # gr
+count_cut = { fg = "{{ @yazi_marker_cut_bg | hex }}", bold = true, reversed = true } # re
+count_selected = { fg = "{{ @yazi_find_keyword_fg | hex }}", bold = true, reversed = true } # cy
+
+# Border
+border_symbol = "│"
+border_style = { fg = "{{ @yazi_border_style_fg | hex }}" } # ui
+
+[indicator]
+parent = { underline = true }
+current = { fg = "{{ @yazi_cwd_fg | hex }}", bg = "{{ @yazi_current_bg | hex }}" } # tx, ui
+preview = { underline = true }
+padding = { open = "█", close = "█" }
+
+[tabs]
+active = { fg = "{{ @yazi_cwd_fg | hex }}", bg = "{{ @yazi_active_bg | hex }}", bold = true } # tx, ui-3
+inactive = { fg = "{{ @yazi_inactive_fg | hex }}", bg = "{{ @yazi_inactive_bg | hex }}" } # tx-2, ui
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+[mode]
+# Normal mode
+normal_main = { fg = "{{ @yazi_cwd_fg | hex }}", bg = "{{ @yazi_normal_main_bg | hex }}", bold = true } # tx, ui-3
+normal_alt = { fg = "{{ @yazi_inactive_fg | hex }}", bg = "{{ @yazi_normal_alt_bg | hex }}" } # tx-2, ui
+
+# Select mode
+select_main = { fg = "{{ @yazi_select_main_fg | hex }}", bg = "{{ @yazi_find_keyword_fg | hex }}", bold = true } # bg, cy
+select_alt = { fg = "{{ @yazi_find_keyword_fg | hex }}", bg = "{{ @yazi_select_alt_bg | hex }}" } # cy, cy-900
+
+# Unset mode
+unset_main = { fg = "{{ @yazi_select_main_fg | hex }}", bg = "{{ @yazi_find_keyword_fg | hex }}", bold = true } # bg, cy
+unset_alt = { fg = "{{ @yazi_find_keyword_fg | hex }}", bg = "{{ @yazi_select_alt_bg | hex }}" } # cy, cy-900
+
+[status]
+overall = { fg = "{{ @yazi_cwd_fg | hex }}" } # tx
+
+# Permissions
+perm_type = { fg = "{{ @yazi_find_keyword_fg | hex }}" } # bl
+perm_read = { fg = "{{ @yazi_perm_read_fg | hex }}" } # ye
+perm_write = { fg = "{{ @yazi_marker_cut_bg | hex }}" } # re
+perm_exec = { fg = "{{ @yazi_marker_copied_bg | hex }}" } # gr
+perm_sep = { fg = "{{ @yazi_inactive_fg | hex }}" } # tx-2
+
+# Progress
+progress_label = { fg = "{{ @yazi_progress_label_fg | hex }}" } # bg
+progress_normal = { fg = "{{ @yazi_find_keyword_fg | hex }}", bg = "{{ @yazi_progress_normal_bg | hex }}" } # cy, cy-700
+progress_error = { bg = "{{ @yazi_marker_cut_bg | hex }}" } # re
+
+[which]
+cols = 3
+mask = { bg = "{{ @yazi_mask_bg | hex }}" } # bg-2
+cand = { fg = "{{ @yazi_find_keyword_fg | hex }}", bold = true } # cy
+rest = { fg = "{{ @yazi_find_keyword_fg | hex }}", italic = true } # cy
+desc = { fg = "{{ @yazi_desc_fg | hex }}" } # tx-3
+separator = " "
+separator_style = { }
+
+[confirm]
+border = { fg = "{{ @yazi_border_fg | hex }}" } # ui-3
+title = { fg = "{{ @yazi_title_fg | hex }}", bold = true } # tx-3
+body = { fg = "{{ @yazi_cwd_fg | hex }}", bold = true } # tx
+list = { fg = "{{ @yazi_cwd_fg | hex }}" } # tx
+btn_yes = { fg = "{{ @yazi_btn_yes_fg | hex }}", bg = "{{ @yazi_btn_yes_bg | hex }}", bold = true } # tx, ui-3
+btn_no = { fg = "{{ @yazi_btn_no_fg | hex }}", bg = "{{ @yazi_btn_no_bg | hex }}" } # tx-2, ui
+
+[spot]
+border = { fg = "{{ @yazi_border_fg_2 | hex }}" } # ui-3
+title = { fg = "{{ @yazi_title_fg_2 | hex }}", bold = true } # tx-3
+tbl_col = { fg = "{{ @yazi_inactive_fg | hex }}" } # tx-2
+tbl_cell = { fg = "{{ @yazi_cwd_fg | hex }}", bg = "{{ @yazi_tbl_cell_bg | hex }}" } # tx, ui
+
+[notify]
+# Notification title
+title_info = { fg = "{{ @yazi_find_keyword_fg | hex }}" } # bl
+title_warn = { fg = "{{ @yazi_title_warn_fg | hex }}" } # or
+title_error = { fg = "{{ @yazi_marker_cut_bg | hex }}" } # re
+
+[pick]
+border = { fg = "{{ @yazi_border_fg_2 | hex }}", bold = true } # ui-3
+active = { fg = "{{ @yazi_cwd_fg | hex }}" } # tx
+inactive = { fg = "{{ @yazi_inactive_fg | hex }}" } # tx-2
+
+[input]
+border = { fg = "{{ @yazi_border_fg_2 | hex }}" } # ui-3
+title = { fg = "{{ @yazi_title_fg_2 | hex }}", bold = true } # tx-3
+value = { fg = "{{ @yazi_cwd_fg | hex }}" } # tx
+selected = { bg = "{{ @yazi_selected_bg | hex }}" } # bg-2
+
+[cmp]
+border = { fg = "{{ @yazi_border_fg_2 | hex }}", bold = true } # ui-3
+active = { fg = "{{ @yazi_cwd_fg | hex }}", bg = "{{ @yazi_tbl_cell_bg | hex }}" } # tx, ui
+inactive = { fg = "{{ @yazi_inactive_fg | hex }}" } # tx-2
+
+[tasks]
+border = { fg = "{{ @yazi_border_fg_2 | hex }}" } # ui-3
+title = { fg = "{{ @yazi_title_fg_2 | hex }}", bold = true } # tx-3
+hovered = { fg = "{{ @yazi_cwd_fg | hex }}", bg = "{{ @yazi_tbl_cell_bg | hex }}" } # tx, ui
+
+[help]
+on = { fg = "{{ @yazi_find_keyword_fg | hex }}" } # bl
+run = { fg = "{{ @yazi_find_keyword_fg | hex }}" } # cy
+desc = { fg = "{{ @yazi_desc_fg | hex }}", italic = true } # tx-3
+hovered = { bg = "{{ @yazi_tbl_cell_bg | hex }}" } # ui
+footer = { fg = "{{ @yazi_overall_bg | hex }}", bg = "{{ @yazi_find_keyword_fg | hex }}", bold = true } # bg, cy
+
+[filetype]
+rules = [
+  # Empty files
+  { mime = "inode/empty", fg = "{{ @yazi_mime_fg | hex }}" }, # tx-3
+
+  # Special files
+  { url = "*", is = "orphan", fg = "{{ @yazi_mime_fg | hex }}" }, # tx-3
+  { url = "*/", is = "orphan", fg = "{{ @yazi_mime_fg | hex }}" }, # tx-3
+  { url = "*", is = "link", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { url = "*/", is = "link", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { url = "*", is = "block", fg = "{{ @yazi_url_fg_2 | hex }}" }, # tx
+  { url = "*", is = "char", fg = "{{ @yazi_url_fg_2 | hex }}" }, # tx
+  { url = "*", is = "fifo", fg = "{{ @yazi_url_fg_3 | hex }}" }, # ma
+  { url = "*", is = "sock", fg = "{{ @yazi_url_fg_3 | hex }}" }, # ma
+  { url = "*", is = "sticky", fg = "{{ @yazi_url_fg_2 | hex }}" }, # tx
+  { url = "*", is = "dummy", fg = "{{ @yazi_mime_fg | hex }}" }, # tx-3
+
+  # Fallback
+  { url = "*/", fg = "{{ @yazi_url_fg_2 | hex }}" }, # tx
+  { url = "*", is = "exec", fg = "{{ @yazi_url_fg | hex }}" }, # gr
+  { url = "*", fg = "{{ @yazi_inactive_fg | hex }}" } # tx-2
+]
+
+[icon]
+dirs = [
+  { name = ".config", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = ".git", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = ".github", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = ".npm", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Desktop", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Development", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Documents", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Downloads", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Library", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Movies", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Music", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Pictures", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Public", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { name = "Videos", text = "", fg = "{{ @yazi_find_keyword_fg | hex }}" } # cy
+]
+conds = [
+  # Special files
+  { if = "orphan", text = "", fg = "{{ @yazi_mime_fg | hex }}" }, # tx-3
+  { if = "link", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { if = "block", text = "", fg = "{{ @yazi_url_fg_2 | hex }}" }, # tx
+  { if = "char", text = "", fg = "{{ @yazi_url_fg_2 | hex }}" }, # tx
+  { if = "fifo", text = "", fg = "{{ @yazi_url_fg_3 | hex }}" }, # ma
+  { if = "sock", text = "", fg = "{{ @yazi_url_fg_3 | hex }}" }, # ma
+  { if = "sticky", text = "", fg = "{{ @yazi_url_fg_2 | hex }}" }, # tx
+  { if = "dummy", text = "", fg = "{{ @yazi_mime_fg | hex }}" }, # tx-3
+
+  # Fallback
+  { if = "dir", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # cy
+  { if = "exec", text = "", fg = "{{ @yazi_url_fg | hex }}" }, # gr
+  { if = "!dir", text = "", fg = "{{ @yazi_inactive_fg | hex }}" } # tx-2
+]

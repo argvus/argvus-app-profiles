@@ -1,0 +1,20 @@
+# Theme consumer: rendered into every theme build as yazi/tmtheme.xml.
+id = "yazi-tmtheme"
+template = "app-profiles/theme-template/yazi-tmtheme.xml"
+output = "yazi/tmtheme.xml"
+
+# Defaults for the tokens the template reads; a theme that defines one wins.
+[palette]
+danger = "#E06C75"
+syntax_yazi_tmtheme = "@bg"
+syntax_yazi_tmtheme_10 = "@bg | mix(@accent, 0.1)"
+syntax_yazi_tmtheme_11 = "@fg | mix(@bg, 0.3)"
+syntax_yazi_tmtheme_12 = "@danger | mix(@fg, 0.2)"
+syntax_yazi_tmtheme_2 = "@bg | mix(@danger, 0.1)"
+syntax_yazi_tmtheme_3 = "@fg | mix(@bg, 0.4)"
+syntax_yazi_tmtheme_4 = "@fg | mix(@bg, 0.3)"
+syntax_yazi_tmtheme_5 = "@bg | mix(@fg, 0.2)"
+syntax_yazi_tmtheme_6 = "@fg"
+syntax_yazi_tmtheme_7 = "@danger"
+syntax_yazi_tmtheme_8 = "@accent"
+syntax_yazi_tmtheme_9 = "@fg | mix(@bg, 0.2)"

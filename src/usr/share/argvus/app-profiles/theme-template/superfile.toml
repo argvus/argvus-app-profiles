@@ -1,0 +1,47 @@
+# theme: {{ theme.id }}
+
+code_syntax_highlight = "catppuccin-macchiato"
+
+full_screen_fg = "{{ @fg | hex }}"
+full_screen_bg = "{{ @toolkit_background | hex }}"
+gradient_color = ["{{ @accent | hex }}", "{{ @spf_gradient_color_2 | hex }}"]
+
+file_panel_fg = "{{ @fg | hex }}"
+file_panel_bg = "{{ @toolkit_background | hex }}"
+file_panel_border = "{{ @spf_file_panel_border | hex }}"
+file_panel_border_active = "{{ @accent | hex }}"
+file_panel_top_directory_icon = "{{ @accent | hex }}"
+file_panel_top_path = "{{ @spf_file_panel_top_path | hex }}"
+file_panel_item_selected_fg = "{{ @spf_file_panel_item_selected_fg | hex }}"
+file_panel_item_selected_bg = "{{ @spf_file_panel_item_selected_bg | hex }}"
+
+footer_fg = "{{ @fg | hex }}"
+footer_bg = "{{ @spf_footer_bg | hex }}"
+footer_border = "{{ @spf_file_panel_border | hex }}"
+footer_border_active = "{{ @accent | hex }}"
+
+sidebar_fg = "{{ @fg | hex }}"
+sidebar_bg = "{{ @spf_footer_bg | hex }}"
+sidebar_title = "{{ @accent | hex }}"
+sidebar_border = "{{ @spf_file_panel_border | hex }}"
+sidebar_border_active = "{{ @accent | hex }}"
+sidebar_item_selected_fg = "{{ @spf_file_panel_item_selected_fg | hex }}"
+sidebar_item_selected_bg = "{{ @spf_file_panel_item_selected_bg | hex }}"
+sidebar_divider = "{{ @spf_file_panel_border | hex }}"
+
+modal_fg = "{{ @fg | hex }}"
+modal_bg = "{{ @spf_modal_bg | hex }}"
+modal_border_active = "{{ @accent | hex }}"
+modal_cancel_fg = "{{ @spf_modal_cancel_fg | hex }}"
+modal_cancel_bg = "{{ @spf_modal_cancel_bg | hex }}"
+modal_confirm_fg = "{{ @accent | contrast | hex }}"
+modal_confirm_bg = "{{ @accent | hex }}"
+
+help_menu_hotkey = "{{ @accent | hex }}"
+help_menu_title = "{{ @spf_help_menu_title | hex }}"
+
+cursor = "{{ @spf_cursor | hex }}"
+correct = "{{ @accent | hex }}"
+error = "{{ @spf_error | hex }}"
+hint = "{{ @accent | hex }}"
+cancel = "{{ @spf_cancel | hex }}"

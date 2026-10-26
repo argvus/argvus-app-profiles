@@ -1,0 +1,21 @@
+# Theme consumer: rendered into every theme build as superfile/theme.toml.
+id = "superfile"
+template = "app-profiles/theme-template/superfile.toml"
+output = "superfile/theme.toml"
+
+# Defaults for the tokens the template reads; a theme that defines one wins.
+[palette]
+spf_cancel = "@fg | mix(@bg, 0.4)"
+spf_cursor = "@fg"
+spf_error = "@bg | mix(@fg, 0.5)"
+spf_file_panel_border = "@bg | mix(@fg, 0.2)"
+spf_file_panel_item_selected_bg = "@bg | mix(@fg, 0.1)"
+spf_file_panel_item_selected_fg = "@fg"
+spf_file_panel_top_path = "@fg"
+spf_footer_bg = "@bg"
+spf_gradient_color_2 = "@fg | mix(@bg, 0.4)"
+spf_help_menu_title = "@fg"
+spf_modal_bg = "@bg"
+spf_modal_cancel_bg = "@fg | mix(@bg, 0.4)"
+spf_modal_cancel_fg = "@bg"
+toolkit_background = "@bg"

@@ -1,2 +1,3 @@
+# The theme switch writes the flavor of the active theme build and selects it
+# in the user copy of this file.
 [flavor]
-dark = "argvus-dark"
