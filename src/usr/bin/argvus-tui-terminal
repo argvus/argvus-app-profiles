@@ -118,7 +118,7 @@ font_size() {
 # enabled; disabling either restores a fully opaque window.
 control_center_background_opacity() {
   _transparency_enabled="true"
-  _transparency_value="50"
+  _transparency_value="15"
   _blur_enabled="true"
   if command -v argvus >/dev/null 2>&1; then
     _transparency_enabled="$(argvus config get /effects/transparency_control-center_enabled --effective --raw 2>/dev/null || true)"
@@ -135,9 +135,9 @@ control_center_background_opacity() {
   esac
   if [ "$_transparency_on" -eq 1 ] && [ "$_blur_on" -eq 1 ]; then
     case "$_transparency_value" in
-      ''|*[!0-9]*) _transparency_value=50 ;;
+      ''|*[!0-9]*) _transparency_value=15 ;;
     esac
-    [ "$_transparency_value" -le 100 ] || _transparency_value=50
+    [ "$_transparency_value" -le 100 ] || _transparency_value=15
     awk -v value="$_transparency_value" 'BEGIN { printf "%.2f\n", 1 - (value / 100) }'
   else
     printf '1.00\n'
