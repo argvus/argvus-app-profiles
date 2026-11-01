@@ -1,6 +1,6 @@
 # Maintainer: William C. Canin
 pkgname=argvus-app-profiles
-pkgver=0.1.0
+pkgver=0.0.0
 pkgrel=1
 pkgdesc="Application profiles and launcher wrappers for the ARGVUS desktop"
 arch=('x86_64')
