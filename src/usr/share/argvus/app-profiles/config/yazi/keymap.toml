@@ -47,7 +47,7 @@ desc = "Open in terminal"
 # --- Open file intelligently ---
 [[mgr.prepend_keymap]]
 on = ["\\", "o"]
-run = 'shell "/usr/share/argvus/app-profiles/sh/yazi-open-smart.sh \"$0\"" --orphan'
+run = 'shell "/usr/share/argvus/app-profiles/sh/yazi-open-smart.sh \"$0\"" --block'
 desc = "Open file intelligently"
 
 # --- Open in Visual Studio Code  ---

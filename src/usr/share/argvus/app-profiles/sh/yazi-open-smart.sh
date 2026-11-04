@@ -6,7 +6,7 @@ ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}
 
 # Default apps resolve from the argvus-control-center Apps state (via variables.sh),
 # falling back to the Argvus built-ins.
-TEXT_EDITOR="${TEXT_EDITOR:-mousepad}"
+TERMINAL_EDITOR="${TERMINAL_EDITOR:-vim}"
 YAZI="$FILE_MANAGER"
 [ -n "$YAZI" ] || YAZI="/usr/bin/yazi"
 case "$YAZI" in
@@ -69,7 +69,7 @@ case "$mime" in
     application/toml|\
     application/x-yaml|\
     application/x-shellscript)
-        "$TEXT_EDITOR" "$target" >/dev/null 2>&1 &
+        "$TERMINAL_EDITOR" "$target"
         ;;
     application/pdf|application/x-pdf|application/x-bzpdf|application/x-gzpdf|image/vnd.pdf|image/vnd.djvu|image/vnd.djvu+multipage)
         "$ZATHURA" "$target" >/dev/null 2>&1 &
